@@ -6,6 +6,6 @@
     <title>Document</title>
 </head>
 <body>
-    <p>Ini PHP</p>
+    <p>ini proses</p>
 </body>
 </html>
