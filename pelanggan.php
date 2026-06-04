@@ -1,0 +1,382 @@
+<?php
+session_start();
+include 'config/koneksi.php';
+
+if(!isset($_SESSION['login'])){
+    header("Location: login.php");
+    exit;
+}
+
+/* HAPUS DATA */
+if(isset($_GET['hapus'])){
+
+    $id = (int)$_GET['hapus'];
+
+    mysqli_query(
+        $conn,
+        "DELETE FROM pelanggan
+         WHERE id_pelanggan='$id'"
+    );
+
+    echo "
+    <script>
+        alert('Data pelanggan berhasil dihapus');
+        window.location='pelanggan.php';
+    </script>
+    ";
+    exit;
+}
+
+/* PENCARIAN */
+$cari = '';
+
+if(isset($_GET['cari'])){
+    $cari = mysqli_real_escape_string(
+        $conn,
+        $_GET['cari']
+    );
+
+    $query = mysqli_query(
+        $conn,
+        "SELECT *
+         FROM pelanggan
+         WHERE nama_pelanggan LIKE '%$cari%'
+         OR nomor_pelanggan LIKE '%$cari%'
+         OR no_hp LIKE '%$cari%'
+         ORDER BY id_pelanggan DESC"
+    );
+}else{
+
+    $query = mysqli_query(
+        $conn,
+        "SELECT *
+         FROM pelanggan
+         ORDER BY id_pelanggan DESC"
+    );
+}
+?>
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Data Pelanggan</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="stylesheet"
+href="assets/css/style.css">
+
+</head>
+
+<body class="bg-gray-100">
+
+<div class="flex">
+
+    <!-- SIDEBAR -->
+    <aside
+    id="sidebar"
+    class="sidebar bg-blue-700 text-white w-64 min-h-screen">
+
+        <div class="p-6 border-b border-blue-600">
+
+            <h2 class="text-2xl font-bold">
+                💧 Meteran Air
+            </h2>
+
+        </div>
+
+        <nav class="mt-4">
+
+            <a href="dashboard.php"
+            class="block px-6 py-3 hover:bg-blue-800">
+
+                Dashboard
+
+            </a>
+
+            <a href="pelanggan.php"
+            class="block px-6 py-3 bg-blue-800">
+
+                Data Pelanggan
+
+            </a>
+
+            <a href="logout.php"
+            class="block px-6 py-3 hover:bg-red-600">
+
+                Logout
+
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <!-- CONTENT -->
+    <main class="flex-1">
+
+        <!-- TOPBAR -->
+        <div
+        class="bg-white shadow px-6 py-4 flex justify-between items-center">
+
+            <button
+            onclick="toggleSidebar()"
+            class="mobile-menu text-2xl">
+
+                ☰
+
+            </button>
+
+            <h1 class="text-xl md:text-2xl font-bold">
+                Data Pelanggan
+            </h1>
+
+            <div>
+                <?= $_SESSION['nama_petugas']; ?>
+            </div>
+
+        </div>
+
+        <!-- CONTENT -->
+        <div class="p-6">
+
+            <!-- HEADER -->
+            <div
+            class="bg-white rounded-2xl shadow p-6 mb-6">
+
+                <div
+                class="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+
+                    <div>
+
+                        <h2
+                        class="text-2xl font-bold">
+
+                            Daftar Pelanggan
+
+                        </h2>
+
+                        <p
+                        class="text-gray-500">
+
+                            Kelola seluruh data pelanggan air
+
+                        </p>
+
+                    </div>
+
+                    <a
+                    href="tambah_pelanggan.php"
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-xl">
+
+                        + Tambah Pelanggan
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- SEARCH -->
+            <div
+            class="bg-white rounded-2xl shadow p-4 mb-6">
+
+                <form method="GET">
+
+                    <div
+                    class="flex flex-col md:flex-row gap-3">
+
+                        <input
+                        type="text"
+                        name="cari"
+                        value="<?= $cari ?>"
+                        placeholder="Cari nama pelanggan, nomor pelanggan atau no hp..."
+                        class="border rounded-xl p-3 flex-1">
+
+                        <button
+                        type="submit"
+                        class="bg-blue-600 text-white px-6 rounded-xl">
+
+                            Cari
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+            <!-- TABEL -->
+            <div
+            class="bg-white rounded-2xl shadow overflow-hidden">
+
+                <div class="table-container">
+
+                    <table
+                    class="w-full">
+
+                        <thead
+                        class="bg-blue-600 text-white">
+
+                            <tr>
+
+                                <th class="p-4 text-left">
+                                    No
+                                </th>
+
+                                <th class="p-4 text-left">
+                                    No Pelanggan
+                                </th>
+
+                                <th class="p-4 text-left">
+                                    Nama
+                                </th>
+
+                                <th class="p-4 text-left">
+                                    No HP
+                                </th>
+
+                                <th class="p-4 text-left">
+                                    Tarif/m³
+                                </th>
+
+                                <th class="p-4 text-left">
+                                    Status
+                                </th>
+
+                                <th class="p-4 text-center">
+                                    Aksi
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+<?php
+
+$no = 1;
+
+while($data = mysqli_fetch_assoc($query)) :
+
+?>
+
+<tr class="border-b hover:bg-gray-50">
+
+    <td class="p-4">
+        <?= $no++; ?>
+    </td>
+
+    <td class="p-4 font-semibold">
+        <?= $data['nomor_pelanggan']; ?>
+    </td>
+
+    <td class="p-4">
+        <?= $data['nama_pelanggan']; ?>
+    </td>
+
+    <td class="p-4">
+        <?= $data['no_hp']; ?>
+    </td>
+
+    <td class="p-4">
+        Rp <?= number_format($data['tarif_per_m3'],0,',','.'); ?>
+    </td>
+
+    <td class="p-4">
+
+        <?php if($data['status'] == 'Aktif') : ?>
+
+            <span
+            class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
+
+                Aktif
+
+            </span>
+
+        <?php else : ?>
+
+            <span
+            class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm">
+
+                Nonaktif
+
+            </span>
+
+        <?php endif; ?>
+
+    </td>
+
+    <td class="p-4">
+
+        <div
+        class="flex justify-center gap-2">
+
+            <a
+            href="edit_pelanggan.php?id=<?= $data['id_pelanggan']; ?>"
+            class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg">
+
+                Edit
+
+            </a>
+
+            <a
+            href="?hapus=<?= $data['id_pelanggan']; ?>"
+            onclick="return konfirmasiHapus('<?= $data['nama_pelanggan']; ?>')"
+            class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg">
+
+                Hapus
+
+            </a>
+
+        </div>
+
+    </td>
+
+</tr>
+
+<?php endwhile; ?>
+
+<?php
+if(mysqli_num_rows($query) == 0){
+?>
+<tr>
+
+    <td
+    colspan="7"
+    class="text-center p-8 text-gray-500">
+
+        Belum ada data pelanggan
+
+    </td>
+
+</tr>
+<?php
+}
+?>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script src="assets/js/script.js"></script>
+
+</body>
+</html>
