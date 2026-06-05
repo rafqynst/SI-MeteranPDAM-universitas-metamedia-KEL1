@@ -16,10 +16,32 @@ function toggleSidebar(){
 
     sidebar.classList.toggle('show');
 }
-function konfirmasiHapus(nama){
-    return confirm(
-        "Yakin ingin menghapus pelanggan " +
-        nama +
-        " ?"
-    );
+function bukaModal(id,nama){
+
+    const modal =
+    document.getElementById('modalHapus');
+
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+
+    document.getElementById(
+        'namaPelanggan'
+    ).innerHTML =
+    "Apakah Anda yakin ingin menghapus <b>" +
+    nama +
+    "</b>?";
+
+    document.getElementById(
+        'btnHapus'
+    ).href =
+    "pelanggan.php?hapus=" + id;
+}
+
+function tutupModal(){
+
+    const modal =
+    document.getElementById('modalHapus');
+
+    modal.classList.remove('flex');
+    modal.classList.add('hidden');
 }
