@@ -61,6 +61,10 @@ if(isset($_POST['update'])){
         $conn,
         $_POST['status']
     );
+     $kategori = mysqli_real_escape_string(
+        $conn,
+        $_POST['kategori']
+    );
 
     $update = mysqli_query(
         $conn,
@@ -71,8 +75,8 @@ if(isset($_POST['update'])){
         alamat='$alamat',
         no_hp='$hp',
         tarif_per_m3='$tarif',
-        status='$status'
-
+        status='$status',
+        kategori='$kategori'
         WHERE id_pelanggan='$id'"
     );
 
@@ -269,7 +273,7 @@ href="assets/css/style.css">
                     </div>
 
                     <div
-                    class="grid md:grid-cols-2 gap-5 mt-5">
+                    class="grid md:grid-cols-3 gap-5 mt-5">
 
                         <div>
 
@@ -312,7 +316,28 @@ href="assets/css/style.css">
                             </select>
 
                         </div>
+                        <div class="mb-4">
+    <label class="font-semibold">
+        Kategori
+    </label>
 
+    <select name="kategori" class="form-input">
+    <option value="RT"
+        <?= ($data['kategori'] == 'RT') ? 'selected' : ''; ?>>
+        Rumah Tangga
+    </option>
+
+    <option value="ID"
+        <?= ($data['kategori'] == 'ID') ? 'selected' : ''; ?>>
+        Industri
+    </option>
+
+    <option value="IP"
+        <?= ($data['kategori'] == 'IP') ? 'selected' : ''; ?>>
+        Instansi Pemerintah
+    </option>
+</select>
+</div>
                     </div>
 
                     <div

@@ -338,6 +338,10 @@ class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
                                     </th>
 
                                     <th class="p-4 text-center">
+                                        Kategori
+                                    </th>
+
+                                    <th class="p-4 text-center">
                                         Aksi
                                     </th>
 
@@ -399,12 +403,17 @@ class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
 
                                         </td>
 
+                                        <td class="p-4">
+                                            <?= $data['kategori']; ?>
+                                        </td>
+
+
                                         <td class="p-2">
 
                                             <div class="flex justify-center gap-2">
 
                                                 <a href="edit_pelanggan.php?id=<?= $data['id_pelanggan']; ?>"
-                                                    class="bg-grey-100 hover:bg-grey-400 text-green px-2 py-2 rounded-lg">
+                                                    class="bg hover:bg text-green px-2 py-2 rounded-lg">
 
                                                    <i class="fas fa-pen"></i>
 
@@ -415,7 +424,7 @@ class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
                                                 '<?= $data['id_pelanggan']; ?>',
                                                 '<?= htmlspecialchars($data['nama_pelanggan']); ?>'
                                                 )"
-                                                class="bg-grey-100 hover:bg-grey-400 text-red px-2 py-2 rounded-lg">
+                                                class="bg hover:bg text-red px-2 py-2 rounded-lg">
 
                                                     <i class="fas fa-trash"></i>
 

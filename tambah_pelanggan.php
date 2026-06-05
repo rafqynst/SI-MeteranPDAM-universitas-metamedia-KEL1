@@ -87,6 +87,10 @@ if(isset($_POST['simpan'])){
         $conn,
         $_POST['status']
     );
+    $kategori = mysqli_real_escape_string(
+        $conn,
+        $_POST['kategori']
+    );
 
     $simpan = mysqli_query(
         $conn,
@@ -98,7 +102,8 @@ if(isset($_POST['simpan'])){
             alamat,
             no_hp,
             tarif_per_m3,
-            status
+            status,
+            kategori
         )
         VALUES
         (
@@ -108,7 +113,8 @@ if(isset($_POST['simpan'])){
             '$alamat',
             '$hp',
             '$tarif',
-            '$status'
+            '$status',
+            '$kategori'
         )"
     );
 
@@ -124,6 +130,7 @@ if($simpan){
     echo mysqli_error($conn);
 }
 }
+?>
 ?>
 
 <!DOCTYPE html>
@@ -290,7 +297,7 @@ href="assets/css/style.css">
                     </div>
 
                     <div
-                    class="grid md:grid-cols-2 gap-5 mt-5">
+                    class="grid md:grid-cols-3 gap-4 mt-4">
 
                         <div>
 
@@ -328,6 +335,21 @@ href="assets/css/style.css">
                             </select>
 
                         </div>
+    <div>
+    <label class="font-semibold">
+        Kategori
+    </label>
+
+    <select name="kategori" required
+        class=form-input>
+        
+        <option value="">-- Pilih Kategori --</option>
+        <option value="RT">Rumah Tangga</option>
+        <option value="ID">Industri</option>
+        <option value="IP">Instansi Pemerintah</option>
+
+    </select>
+</div>
 
                     </div>
 
