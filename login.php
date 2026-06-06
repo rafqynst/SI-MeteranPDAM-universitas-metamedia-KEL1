@@ -54,26 +54,27 @@ if(isset($_POST['login'])){
 <script src="https://cdn.tailwindcss.com"></script>
 
 <link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 </head>
 
 <body class="min-h-screen flex items-center justify-center p-5">
 
-<div class="login-card bg-white rounded-3xl shadow-2xl overflow-hidden w-full max-w-md">
+<div class="login-card bg-indigo-100/30 rounded-3xl shadow-2xl overflow-hidden w-full max-w-md">
 
-    <div class="bg-blue-600 text-white text-center p-8">
+    <div class="bg-indigo-100/50 text-white text-center p-8">
 
-        <div class="text-6xl mb-3">
-            💧
-        </div>
+        <div class="text-3xl mb-3 text-cyan-400">
+    <i class="fas fa-droplet"></i>
+</div>
 
-        <h1 class="text-3xl font-bold">
-            Meteran Air
-        </h1>
+       <h1 class="text-4xl font-extrabold tracking-tight bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+    Meteran Air
+</h1>
 
-        <p class="opacity-80 mt-2">
-            Sistem Pengelolaan Pelanggan Air
-        </p>
+<p class="text-slate-300 text-sm font-medium tracking-wide mt-1 opacity-90">
+    Sistem Pengelolaan Pelanggan Air
+</p>
 
     </div>
 
@@ -99,7 +100,7 @@ if(isset($_POST['login'])){
                     type="text"
                     name="username"
                     required
-                    class="input-focus w-full border p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="bg-sky-950/30 input-focus w-full border p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Masukkan username">
 
             </div>
@@ -115,7 +116,7 @@ if(isset($_POST['login'])){
                     id="password"
                     name="password"
                     required
-                    class="input-focus w-full border p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="bg-sky-950/30 input-focus w-full border p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Masukkan password">
 
             </div>
@@ -139,15 +140,15 @@ if(isset($_POST['login'])){
             <button
                 type="submit"
                 name="login"
-                class="w-full bg-blue-600 hover:bg-blue-700 transition text-white font-bold py-3 rounded-xl">
-
+                class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 transition-all duration-300 text-white font-semibold tracking-wide py-3 rounded-xl shadow-lg shadow-blue-500/20 active:scale-[0.98]">
+  
                 Login
 
             </button>
 
         </form>
 
-        <div class="text-center mt-6 text-gray-500 text-sm">
+        <div class="text-center mt-6 text-gray-950 text-sm">
 
             © 2026 Sistem Meteran Air Kelompok 1
 

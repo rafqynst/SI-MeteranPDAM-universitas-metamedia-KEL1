@@ -129,25 +129,27 @@ class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
     <div class="flex">
 
         <!-- SIDEBAR -->
-        <aside id="sidebar" class="sidebar bg-blue-700 text-white w-64 min-h-screen">
-
+       <aside
+    id="sidebar"
+    class="sidebar bg-gradient-to-b from-cyan-500 via-blue-600 to-blue-900 text-white w-64 min-h-screen">
+        <div class="p-6"></div>
             <div class="p-6 border-b border-blue-600">
 
-                <h2 class="text-2xl font-bold">
-                    💧 Meteran Air
-                </h2>
+               <h2 class="text-2xl font-bold text-blue-300">
+                <i class="fas fa-droplet"></i> Meteran Air
+            </h2>
 
             </div>
 
             <nav class="mt-4">
 
-                <a href="dashboard.php" class="block px-6 py-3 hover:bg-blue-800">
+                <a href="dashboard.php" class="block px-6 py-3 hover:bg-blue-600">
 
                     Dashboard
 
                 </a>
 
-                <a href="pelanggan.php" class="block px-6 py-3 bg-blue-800">
+                <a href="pelanggan.php" class="block px-6 py-3 bg-blue-600">
 
                     Data Pelanggan
 
@@ -167,7 +169,8 @@ class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
         <main class="flex-1">
 
             <!-- TOPBAR -->
-            <div class="bg-white shadow px-6 py-4 flex justify-between items-center">
+            <div class="bg-gradient-to-r from-blue-900/20 via-slate-900/10 to-transparent border-b border-white/10 backdrop-blur-sm shadow-md px-6 py-4 flex justify-between items-center text-white">
+
 
                 <button onclick="toggleSidebar()" class="mobile-menu text-2xl">
 

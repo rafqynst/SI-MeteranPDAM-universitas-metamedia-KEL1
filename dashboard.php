@@ -33,10 +33,11 @@ content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet"
 href="assets/css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 </head>
 
-<body class="bg-gray-100">
+<body >
 
 <div class="flex">
 
@@ -44,27 +45,26 @@ href="assets/css/style.css">
 
     <aside
     id="sidebar"
-    class="sidebar bg-blue-700 text-white w-64 min-h-screen">
-
+    class="sidebar bg-gradient-to-b from-cyan-500/70 via-blue-600/70 to-blue-900/70 text-white w-64 min-h-screen">
         <div class="p-6">
 
-            <h2 class="text-2xl font-bold">
-                💧 Meteran Air
+            <h2 class="text-2xl font-bold text-blue-300">
+                <i class="fas fa-droplet"></i> Meteran Air
             </h2>
+           
 
         </div>
 
         <nav class="mt-6">
 
-    <a href="dashboard.php"
-    class="block px-6 py-3 bg-blue-800">
+    <a href="dashboard.php" class="block px-6 py-3 hover:bg-blue-600">
 
-        Dashboard
+                    Dashboard
 
-    </a>
+                </a>
 
     <a href="pelanggan.php"
-    class="block px-6 py-3 hover:bg-blue-800">
+    class="block px-6 py-3 hover:bg-blue-600">
 
         Data Pelanggan
 
@@ -87,7 +87,7 @@ href="assets/css/style.css">
         <!-- TOPBAR -->
 
         <div
-        class="bg-white shadow px-6 py-4 flex justify-between items-center">
+        class="bg-gradient-to-r from-blue-900/20 via-slate-900/10 to-transparent border-b border-white/10 backdrop-blur-sm shadow-md px-6 py-4 flex justify-between items-center text-white">
 
             <button
             onclick="toggleSidebar()"
@@ -100,11 +100,11 @@ href="assets/css/style.css">
             <h1
             class="text-2xl font-bold">
 
-                Dashboard
+                DASHBOARD
 
             </h1>
 
-            <div>
+            <div class=" bg-green-300 input-focus border p-1 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
 
                 Halo,
                 <b>
@@ -126,11 +126,9 @@ href="assets/css/style.css">
 
                 <div
                 class="card-hover bg-white rounded-2xl shadow p-6">
-
-                    <div class="text-4xl mb-3">
-                        👥
-                    </div>
-
+                <div class="text-3xl mb-3 text-blue-400">
+                <i class="fas fa-users"></i>
+                </div>
                     <h3
                     class="text-gray-500">
 
@@ -139,7 +137,7 @@ href="assets/css/style.css">
                     </h3>
 
                     <p
-                    class="text-3xl font-bold text-blue-600">
+                    class="text-3xl font-bold text-blue-400">
 
                         <?= $totalPelanggan ?>
 
@@ -152,9 +150,9 @@ href="assets/css/style.css">
                 <div
                 class="card-hover bg-white rounded-2xl shadow p-6">
 
-                    <div class="text-4xl mb-3">
-                        👨‍💼
-                    </div>
+                    <div class="text-3xl mb-3 text-slate-500">
+                <i class="fas fa-user-tie"></i> 
+                </div>
 
                     <h3
                     class="text-gray-500">
@@ -164,7 +162,7 @@ href="assets/css/style.css">
                     </h3>
 
                     <p
-                    class="text-3xl font-bold text-green-600">
+                    class="text-3xl font-bold text-slate-500">
 
                         <?= $totalPetugas ?>
 
@@ -177,10 +175,9 @@ href="assets/css/style.css">
                 <div
                 class="card-hover bg-white rounded-2xl shadow p-6">
 
-                    <div class="text-4xl mb-3">
-                        💧
+                    <div class="text-3xl mb-3 text-cyan-400">
+                    <i class="fas fa-faucet"></i>
                     </div>
-
                     <h3
                     class="text-gray-500">
 
@@ -189,7 +186,7 @@ href="assets/css/style.css">
                     </h3>
 
                     <p
-                    class="text-3xl font-bold text-cyan-600">
+                    class="text-3xl font-bold text-cyan-400">
 
                         0 m³
 
@@ -202,8 +199,8 @@ href="assets/css/style.css">
                 <div
                 class="card-hover bg-white rounded-2xl shadow p-6">
 
-                    <div class="text-4xl mb-3">
-                        💰
+                    <div class="text-3xl mb-3 text-emerald-400">
+                    <i class="fas fa-wallet"></i>
                     </div>
 
                     <h3
@@ -214,7 +211,7 @@ href="assets/css/style.css">
                     </h3>
 
                     <p
-                    class="text-3xl font-bold text-yellow-500">
+                    class="text-3xl font-bold text-emerald-400">
 
                         Rp0
 
