@@ -1,225 +1,341 @@
 <?php
 include 'config/koneksi.php';
+session_start();
 
 if (!isset($_GET['id'])) {
     header("Location: pemakaian.php");
     exit;
 }
 
-$id = $_GET['id'];
+$id_tagihan = intval($_GET['id']);
 
+// Ambil detail tagihan + pelanggan
 $query = mysqli_query($conn, "
-SELECT
-t.*,
-p.nomor_pelanggan,
-p.nama_pelanggan,
-p.alamat
-FROM tagihan t
-JOIN pelanggan p
-ON t.id_pelanggan = p.id_pelanggan
-WHERE t.id_tagihan='$id'
+    SELECT 
+        tagihan.*,
+        pelanggan.nomor_pelanggan,
+        pelanggan.nama_pelanggan,
+        pelanggan.alamat,
+        pelanggan.no_hp
+    FROM tagihan
+    JOIN pelanggan 
+    ON tagihan.id_pelanggan = pelanggan.id_pelanggan
+    WHERE tagihan.id_tagihan = '$id_tagihan'
 ");
 
 $data = mysqli_fetch_assoc($query);
 
 if (!$data) {
-    header("Location: pemakaian.php");
+    die("Data tagihan tidak ditemukan.");
+}
+
+// Proteksi jika sudah lunas
+if ($data['status'] == 'Lunas') {
+    echo "
+    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+    <script>
+        Swal.fire({
+            icon: 'info',
+            title: 'Sudah Dibayar',
+            text: 'Tagihan ini sudah lunas'
+        }).then(() => {
+            window.location='pemakaian.php';
+        });
+    </script>";
     exit;
 }
 
-if ($data['status'] == 'Lunas') {
-    header("Location: detail_tagihan.php?id=".$id);
-    exit;
-}
+$nama_bulan = [
+    1 => 'Januari',
+    2 => 'Februari',
+    3 => 'Maret',
+    4 => 'April',
+    5 => 'Mei',
+    6 => 'Juni',
+    7 => 'Juli',
+    8 => 'Agustus',
+    9 => 'September',
+    10 => 'Oktober',
+    11 => 'November',
+    12 => 'Desember'
+];
 ?>
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
-<meta charset="UTF-8">
-<title>Pembayaran Tagihan</title>
+    <meta charset="UTF-8">
+    <title>Pembayaran PDAM</title>
 
-<script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+
 <body class="bg-slate-100">
 
-<div class="max-w-4xl mx-auto p-6">
+    <div class="max-w-5xl mx-auto p-6">
 
-<div class="bg-white rounded-2xl shadow-lg p-8">
+        <div class="bg-white rounded-2xl shadow-lg p-8">
 
-<h1 class="text-3xl font-bold mb-6">
-Pembayaran Tagihan PDAM
-</h1>
+            <div class="flex justify-between items-center mb-8">
 
-<form action="proses_bayar.php" method="POST">
+                <h1 class="text-3xl font-bold">
+                    Pembayaran Tagihan PDAM
+                </h1>
 
-<input
-type="hidden"
-name="id_tagihan"
-value="<?= $data['id_tagihan']; ?>">
+                <a href="detail_tagihan.php?id=<?= $data['id_tagihan']; ?>"
+                    class="bg-slate-600 hover:bg-slate-700 text-white px-5 py-3 rounded-lg">
+                    ← Kembali
+                </a>
+            </div>
 
-<input
-type="hidden"
-name="total_bayar"
-value="<?= $data['total_tagihan']; ?>">
+            <form action="proses_bayar.php" method="POST">
 
-<div class="grid md:grid-cols-2 gap-6">
+                <input type="hidden"
+                    name="id_tagihan"
+                    value="<?= $data['id_tagihan']; ?>">
 
-<div>
+                <input type="hidden"
+                    name="id_pelanggan"
+                    value="<?= $data['id_pelanggan']; ?>">
 
-<label class="font-semibold">
-Nomor Pelanggan
-</label>
+                <!-- Detail pelanggan -->
+                <div class="grid md:grid-cols-2 gap-6 mb-8">
 
-<input
-type="text"
-readonly
-value="<?= $data['nomor_pelanggan']; ?>"
-class="w-full mt-2 border rounded-lg p-3 bg-slate-100">
+                    <div class="bg-slate-50 rounded-xl p-5 border">
 
-</div>
+                        <h2 class="font-bold text-lg mb-4">
+                            Data Pelanggan
+                        </h2>
 
-<div>
+                        <div class="space-y-2">
 
-<label class="font-semibold">
-Nama Pelanggan
-</label>
+                            <p>
+                                <span class="font-semibold">
+                                    No Pelanggan:
+                                </span>
+                                <?= $data['nomor_pelanggan']; ?>
+                            </p>
 
-<input
-type="text"
-readonly
-value="<?= $data['nama_pelanggan']; ?>"
-class="w-full mt-2 border rounded-lg p-3 bg-slate-100">
+                            <p>
+                                <span class="font-semibold">
+                                    Nama:
+                                </span>
+                                <?= $data['nama_pelanggan']; ?>
+                            </p>
 
-</div>
+                            <p>
+                                <span class="font-semibold">
+                                    No HP:
+                                </span>
+                                <?= $data['no_hp']; ?>
+                            </p>
 
-<div>
+                            <p>
+                                <span class="font-semibold">
+                                    Alamat:
+                                </span>
+                                <?= $data['alamat']; ?>
+                            </p>
 
-<label class="font-semibold">
-Bulan
-</label>
+                        </div>
+                    </div>
 
-<input
-type="text"
-readonly
-value="<?= $data['bulan']; ?>"
-class="w-full mt-2 border rounded-lg p-3 bg-slate-100">
+                    <!-- Detail tagihan -->
+                    <div class="bg-slate-50 rounded-xl p-5 border">
 
-</div>
+                        <h2 class="font-bold text-lg mb-4">
+                            Detail Tagihan
+                        </h2>
 
-<div>
+                        <div class="space-y-2">
 
-<label class="font-semibold">
-Tahun
-</label>
+                            <p>
+                                <span class="font-semibold">
+                                    Periode:
+                                </span>
 
-<input
-type="text"
-readonly
-value="<?= $data['tahun']; ?>"
-class="w-full mt-2 border rounded-lg p-3 bg-slate-100">
+                                <?= $nama_bulan[$data['bulan']]; ?>
+                                <?= $data['tahun']; ?>
+                            </p>
 
-</div>
+                            <p>
+                                <span class="font-semibold">
+                                    Pemakaian:
+                                </span>
 
-<div>
+                                <?= number_format($data['pemakaian']); ?> m³
+                            </p>
 
-<label class="font-semibold">
-Pemakaian Air
-</label>
+                            <p>
+                                <span class="font-semibold">
+                                    Meter:
+                                </span>
 
-<input
-type="text"
-readonly
-value="<?= number_format($data['pemakaian']); ?> m³"
-class="w-full mt-2 border rounded-lg p-3 bg-slate-100">
+                                <?= $data['meter_bulan_lalu']; ?>
+                                →
+                                <?= $data['meter_bulan_ini']; ?>
+                            </p>
 
-</div>
+                            <p>
+                                <span class="font-semibold">
+                                    HPKA:
+                                </span>
 
-<div>
+                                Rp
+                                <?= number_format($data['hpka']); ?>
+                            </p>
 
-<label class="font-semibold">
-Total Tagihan
-</label>
+                            <p>
+                                <span class="font-semibold">
+                                    Biaya Admin:
+                                </span>
 
-<input
-type="text"
-readonly
-value="Rp <?= number_format($data['total_tagihan'],0,',','.'); ?>"
-class="w-full mt-2 border rounded-lg p-3 bg-slate-100 font-bold text-blue-600">
+                                Rp
+                                <?= number_format($data['biaya_admin']); ?>
+                            </p>
 
-</div>
+                            <p class="text-xl font-bold text-blue-700 mt-3">
 
-</div>
+                                Total:
+                                Rp
+                                <?= number_format($data['total_tagihan']); ?>
 
-<hr class="my-8">
+                            </p>
 
-<h2 class="text-xl font-semibold mb-4">
-Metode Pembayaran
-</h2>
+                        </div>
+                    </div>
+                </div>
 
-<div class="space-y-4">
+                <!-- metode pembayaran -->
+                <div class="mb-8">
 
-<label class="flex items-center gap-3">
-<input
-type="radio"
-name="metode"
-value="Cash"
-required>
+                    <h2 class="font-bold text-lg mb-4">
+                        Pilih Metode Pembayaran
+                    </h2>
 
-Cash
-</label>
+                    <div class="space-y-3">
 
-<label class="flex items-center gap-3">
-<input
-type="radio"
-name="metode"
-value="Transfer">
+                        <label class="flex items-center gap-3 border p-4 rounded-lg cursor-pointer">
 
-Transfer Bank
-</label>
+                            <input type="radio"
+                                name="metode_pembayaran"
+                                value="Cash"
+                                required>
 
-<label class="flex items-center gap-3">
-<input
-type="radio"
-name="metode"
-value="QRIS">
+                            <span class="font-medium">
+                                Cash
+                            </span>
+                        </label>
 
-QRIS
-</label>
+                        <label class="flex items-center gap-3 border p-4 rounded-lg cursor-pointer">
 
-<label class="flex items-center gap-3">
-<input
-type="radio"
-name="metode"
-value="E-Wallet">
+                            <input type="radio"
+                                name="metode_pembayaran"
+                                value="Transfer">
 
-E-Wallet
-</label>
+                            <span class="font-medium">
+                                Transfer Bank
+                            </span>
+                        </label>
 
-</div>
+                        <label class="flex items-center gap-3 border p-4 rounded-lg cursor-pointer">
 
-<div class="flex gap-3 mt-8">
+                            <input type="radio"
+                                name="metode_pembayaran"
+                                value="QR Code">
 
-<a
-href="detail_tagihan.php?id=<?= $data['id_tagihan']; ?>"
-class="bg-slate-500 text-white px-5 py-3 rounded-lg">
-Kembali
-</a>
+                            <span class="font-medium">
+                                QR Code
+                            </span>
+                        </label>
 
-<button
-type="submit"
-class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg">
-Bayar Sekarang
-</button>
+                    </div>
+                </div>
 
-</div>
+                <!-- transfer -->
+                <div id="transfer-box"
+                    class="hidden bg-blue-50 border border-blue-200 rounded-xl p-5 mb-6">
 
-</form>
+                    <h3 class="font-bold text-lg mb-3">
+                        Transfer Bank
+                    </h3>
 
-</div>
+                    <p>
+                        Bank BRI
+                    </p>
 
-</div>
+                    <p class="font-bold text-xl">
+                        1234567890
+                    </p>
+
+                    <p>
+                        A/N PDAM Kota Padang
+                    </p>
+                </div>
+
+                <!-- qr -->
+                <div id="qr-box"
+                    class="hidden bg-green-50 border border-green-200 rounded-xl p-5 mb-6 text-center">
+
+                    <h3 class="font-bold text-lg mb-3">
+                        Scan QR Code
+                    </h3>
+
+                    <img src="assets/qris.jpg"
+                        class="w-72 mx-auto rounded-xl shadow-lg">
+
+                    <p class="mt-4 text-slate-600">
+                        Scan QR untuk melakukan pembayaran
+                    </p>
+                </div>
+
+                <div class="flex gap-4">
+
+                    <button type="submit"
+                        class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold">
+
+                        Bayar Sekarang
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    <script>
+        const metode = document.querySelectorAll(
+            'input[name="metode_pembayaran"]'
+        );
+
+        const transferBox =
+            document.getElementById('transfer-box');
+
+        const qrBox =
+            document.getElementById('qr-box');
+
+        metode.forEach(item => {
+
+            item.addEventListener('change', function() {
+
+                transferBox.classList.add('hidden');
+                qrBox.classList.add('hidden');
+
+                if (this.value === 'Transfer') {
+                    transferBox.classList.remove('hidden');
+                }
+
+                if (this.value === 'QR Code') {
+                    qrBox.classList.remove('hidden');
+                }
+            });
+        });
+    </script>
 
 </body>
+
 </html>
