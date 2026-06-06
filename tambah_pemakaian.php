@@ -60,6 +60,8 @@ if (isset($_POST['simpan'])) {
         exit;
     }
 
+    
+
     // simpan data
     $insert = mysqli_query($conn, "
         INSERT INTO tagihan (
