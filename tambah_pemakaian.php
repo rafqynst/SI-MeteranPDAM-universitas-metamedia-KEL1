@@ -1,4 +1,3 @@
-
 <?php
 include 'config/koneksi.php';
 
@@ -60,7 +59,7 @@ if (isset($_POST['simpan'])) {
         exit;
     }
 
-    
+
 
     // simpan data
     $insert = mysqli_query($conn, "
@@ -113,7 +112,6 @@ if (isset($_POST['simpan'])) {
 
         });
         </script>";
-
     } else {
 
         echo "
@@ -186,10 +184,12 @@ if (isset($_POST['simpan'])) {
                             Bulan
                         </label>
 
+                        <!-- select untuk pelanggan baru -->
                         <select
                             name="bulan"
-                            required
+                            id="bulan_select"
                             class="w-full border rounded-lg p-3">
+
                             <option value="">
                                 Pilih Bulan
                             </option>
@@ -220,8 +220,17 @@ if (isset($_POST['simpan'])) {
                             <?php endforeach; ?>
 
                         </select>
+
+                        <!-- otomatis -->
+                        <input
+                            type="text"
+                            id="bulan_text"
+                            readonly
+                            class="hidden w-full bg-slate-100 border rounded-lg p-3">
+
                     </div>
 
+                    <!-- tahun -->
                     <div>
                         <label class="font-medium block mb-2">
                             Tahun
@@ -230,13 +239,13 @@ if (isset($_POST['simpan'])) {
                         <input
                             type="number"
                             name="tahun"
+                            id="tahun"
                             value="<?= date('Y'); ?>"
                             class="w-full border rounded-lg p-3"
                             required>
                     </div>
 
                 </div>
-
                 <!-- info pelanggan -->
                 <div class="grid md:grid-cols-3 gap-4 mb-4">
 
@@ -385,6 +394,61 @@ if (isset($_POST['simpan'])) {
                     tarif.value = data.tarif;
                     admin.value = data.admin;
                     kategori.value = data.kategori;
+
+                    const bulanText =
+                        document.getElementById('bulan_text');
+
+                    const bulanSelect =
+                        document.getElementById('bulan_select');
+
+                    const tahun =
+                        document.getElementById('tahun');
+
+                    const namaBulan = [
+                        '',
+                        'Januari',
+                        'Februari',
+                        'Maret',
+                        'April',
+                        'Mei',
+                        'Juni',
+                        'Juli',
+                        'Agustus',
+                        'September',
+                        'Oktober',
+                        'November',
+                        'Desember'
+                    ];
+
+                    // pelanggan baru
+                    if (data.pelanggan_baru) {
+
+                        bulanSelect.classList.remove('hidden');
+                        bulanText.classList.add('hidden');
+
+                        bulanSelect.disabled = false;
+                        tahun.readOnly = false;
+
+                        bulanSelect.value = '';
+                        tahun.value = new Date().getFullYear();
+
+                    } else {
+
+                        // pelanggan lama
+                        bulanSelect.classList.add('hidden');
+                        bulanText.classList.remove('hidden');
+
+                        bulanText.value =
+                            namaBulan[data.bulan];
+
+                        bulanSelect.value =
+                            data.bulan;
+
+                        tahun.value =
+                            data.tahun;
+
+                        tahun.readOnly = true;
+                    }
 
                     hitung();
 

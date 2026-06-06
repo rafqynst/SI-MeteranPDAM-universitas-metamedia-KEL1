@@ -44,6 +44,9 @@ $query = mysqli_query($conn, "
                 class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-lg shadow transition duration-200">
                 + Tambah Pemakaian
             </a>
+
+
+
         </div>
 
         <!-- Card -->
@@ -181,6 +184,17 @@ $query = mysqli_query($conn, "
                 </table>
 
             </div>
+
+            
+        </div>
+
+        
+        <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+            <a
+                href="pelanggan.php"
+                class="inline-block mt-6 bg-slate-600 hover:bg-slate-700 text-white px-5 py-3 rounded-lg">
+                ← Kembali
+            </a>
         </div>
     </div>
 
