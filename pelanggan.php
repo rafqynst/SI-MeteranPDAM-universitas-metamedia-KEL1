@@ -129,41 +129,42 @@ class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
     <div class="flex">
 
         <!-- SIDEBAR -->
-       <aside
+      <aside
     id="sidebar"
-    class="sidebar bg-gradient-to-b from-cyan-500 via-blue-600 to-blue-900 text-white w-64 min-h-screen">
-        <div class="p-6"></div>
-            <div class="p-6 border-b border-blue-600">
+    class="sidebar bg-gradient-to-b from-cyan-500/70 via-blue-600/70 to-blue-900/70 text-white w-64 min-h-screen">
+        <div class="p-6">
 
-               <h2 class="text-2xl font-bold text-blue-300">
+            <h2 class="text-2xl font-bold text-blue-300">
                 <i class="fas fa-droplet"></i> Meteran Air
             </h2>
+           
 
-            </div>
+        </div>
 
-            <nav class="mt-4">
+        <nav class="mt-6">
 
-                <a href="dashboard.php" class="block px-6 py-3 hover:bg-blue-600">
+    <a href="dashboard.php" class="block px-6 py-3 hover:bg-blue-600">
 
                     Dashboard
 
                 </a>
 
-                <a href="pelanggan.php" class="block px-6 py-3 bg-blue-600">
+    <a href="pelanggan.php"
+    class="block px-6 py-3 hover:bg-blue-600">
 
-                    Data Pelanggan
+        Data Pelanggan
 
-                </a>
+    </a>
 
-                <a href="logout.php" class="block px-6 py-3 hover:bg-red-600">
+    <a href="logout.php"
+    class="block px-6 py-3 hover:bg-red-600">
 
-                    Logout
+        Logout
 
-                </a>
+    </a>
 
-            </nav>
-
-        </aside>
+</nav>
+    </aside>
 
         <!-- CONTENT -->
         <main class="flex-1">
@@ -182,8 +183,13 @@ class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
                     Data Pelanggan
                 </h1>
 
-                <div>
+                <div class=" text-gray-800 bg-green-300 input-focus border p-1 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+                Halo,
+                <b>
                     <?= $_SESSION['nama_petugas']; ?>
+                </b>
+
                 </div>
 
             </div>
@@ -213,7 +219,7 @@ class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
                         </div>
 
                         <a href="tambah_pelanggan.php"
-                            class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-xl">
+                            class="bg-cyan-500  hover:bg-cyan-700  text-white px-5 py-3 rounded-xl">
 
                             + Tambah Pelanggan
 
@@ -234,7 +240,7 @@ class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
                                 placeholder="Cari nama pelanggan, nomor pelanggan atau no hp..."
                                 class="border rounded-xl p-3 flex-1">
 
-                            <button type="submit" class="bg-blue-600 text-white px-6 rounded-xl">
+                            <button type="submit" class="bg-cyan-500  text-white px-6 rounded-xl">
 
                                 Cari
 
@@ -312,8 +318,7 @@ class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
 
                         <table class="w-full">
 
-                            <thead class="bg-blue-600 text-white">
-
+                            <thead class="bg-gradient-to-r from-blue-600 to-cyan-500 text-white">
                                 <tr>
 
                                     <th class="p-4 text-left">
@@ -433,8 +438,7 @@ class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
 
                                                 </button>
 
-                                                <a href="?hapus=<?= $data['id_pelanggan']; ?>"
-                                                    onclick="return konfirmasiHapus('<?= $data['nama_pelanggan']; ?>')"
+                                                <a href="edit_pelanggan.php?id=<?= $data['id_pelanggan']; ?>"
                                                     class="bg-green-600 hover:bg-green-800 text-white px-2 py-2 rounded-lg">
 
                                                     <i class="fas fa-file-invoice-dollar"></i>

@@ -155,45 +155,48 @@ href="assets/css/style.css">
 <div class="flex">
 
     <!-- SIDEBAR -->
-    <aside
+   <aside
     id="sidebar"
-    class="sidebar bg-blue-700 text-white w-64 min-h-screen">
+    class="sidebar bg-gradient-to-b from-cyan-500/70 via-blue-600/70 to-blue-900/70 text-white w-64 min-h-screen">
+        <div class="p-6">
 
-        <div class="p-6 border-b border-blue-600">
-
-            <h2 class="text-2xl font-bold">
-                💧 Meteran Air
+            <h2 class="text-2xl font-bold text-blue-300">
+                <i class="fas fa-droplet"></i> Meteran Air
             </h2>
+           
 
         </div>
 
-        <nav class="mt-4">
+        <nav class="mt-6">
 
-            <a href="dashboard.php"
-            class="block px-6 py-3 hover:bg-blue-800">
-                Dashboard
-            </a>
+    <a href="dashboard.php" class="block px-6 py-3 hover:bg-blue-600">
 
-            <a href="pelanggan.php"
-            class="block px-6 py-3 bg-blue-800">
-                Data Pelanggan
-            </a>
+                    Dashboard
 
-            <a href="logout.php"
-            class="block px-6 py-3 hover:bg-red-600">
-                Logout
-            </a>
+                </a>
 
-        </nav>
+    <a href="pelanggan.php"
+    class="block px-6 py-3 hover:bg-blue-600">
 
+        Data Pelanggan
+
+    </a>
+
+    <a href="logout.php"
+    class="block px-6 py-3 hover:bg-red-600">
+
+        Logout
+
+    </a>
+
+</nav>
     </aside>
 
     <!-- CONTENT -->
     <main class="flex-1">
 
         <!-- TOPBAR -->
-        <div
-        class="bg-white shadow px-6 py-4 flex justify-between items-center">
+        <div class="bg-gradient-to-r from-blue-900/20 via-slate-900/10 to-transparent border-b border-white/10 backdrop-blur-sm shadow-md px-6 py-4 flex justify-between items-center text-white">
 
             <button
             onclick="toggleSidebar()"
@@ -205,17 +208,21 @@ href="assets/css/style.css">
                 Tambah Pelanggan
             </h1>
 
-            <div>
-                <?= $_SESSION['nama_petugas']; ?>
-            </div>
+            <div class="text-gray-800 bg-green-300 input-focus border p-1 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
 
+                Halo,
+                <b>
+                    <?= $_SESSION['nama_petugas']; ?>
+                </b>
+
+            </div>
         </div>
 
         <!-- FORM -->
         <div class="p-6">
 
             <div
-            class="form-card bg-white rounded-2xl shadow p-8 max-w-4xl">
+            class="form-card bg-gradient-to-t from-blue-900/70 to-cyan-500/70 via-blue-600/70 rounded-2xl shadow p-8 max-w-4xl">
 
                 <h2 class="text-2xl font-bold mb-6">
                     Form Tambah Pelanggan
@@ -236,7 +243,7 @@ href="assets/css/style.css">
                             name="nomor_pelanggan"
                             value="<?= $nomor_pelanggan ?>"
                             readonly
-                            class="form-input bg-gray-100">
+                            class="form-input bg-gray-400">
 
                         </div>
 
@@ -250,7 +257,7 @@ href="assets/css/style.css">
                             type="text"
                             name="nama_pelanggan"
                             required
-                            class="form-input">
+                            class="form-input bg-gray-300">
 
                         </div>
 
@@ -264,7 +271,7 @@ href="assets/css/style.css">
                             type="text"
                             name="nik"
                             maxlength="16"
-                            class="form-input">
+                            class="form-input bg-gray-300">
 
                         </div>
 
@@ -277,7 +284,7 @@ href="assets/css/style.css">
                             <input
                             type="text"
                             name="no_hp"
-                            class="form-input">
+                            class="form-input bg-gray-300">
 
                         </div>
 
@@ -292,7 +299,7 @@ href="assets/css/style.css">
                         <textarea
                         name="alamat"
                         rows="4"
-                        class="form-input"></textarea>
+                        class="form-input bg-gray-300"></textarea>
 
                     </div>
 
@@ -310,7 +317,7 @@ href="assets/css/style.css">
                             name="tarif_per_m3"
                             value="5000"
                             required
-                            class="form-input">
+                            class="form-input bg-gray-300">
 
                         </div>
 
@@ -322,7 +329,7 @@ href="assets/css/style.css">
 
                             <select
                             name="status"
-                            class="form-input">
+                            class="form-input bg-gray-300">
 
                                 <option value="Aktif">
                                     Aktif
@@ -341,7 +348,7 @@ href="assets/css/style.css">
     </label>
 
     <select name="kategori" required
-        class=form-input>
+        class="form-input bg-gray-300">
         
         <option value="">-- Pilih Kategori --</option>
         <option value="RT">Rumah Tangga</option>

@@ -104,7 +104,7 @@ href="assets/css/style.css">
 
             </h1>
 
-            <div class=" bg-green-300 input-focus border p-1 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <div class=" text-gray-800 bg-green-300 input-focus border p-1 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
 
                 Halo,
                 <b>
@@ -120,7 +120,7 @@ href="assets/css/style.css">
         <div class="p-6">
 
             <div
-            class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 p-6 ">
 
                 <!-- CARD PELANGGAN -->
 
@@ -223,8 +223,7 @@ href="assets/css/style.css">
 
             <!-- WELCOME -->
 
-            <div
-            class="bg-white rounded-2xl shadow p-6 mt-8">
+            <div class=" p-6 card-hover bg-gradient-to-r from-blue-600  to-cyan-500 rounded-2xl shadow-lg  text-white">
 
                 <h2
                 class="text-2xl font-bold mb-3">
@@ -233,7 +232,7 @@ href="assets/css/style.css">
 
                 </h2>
 
-                <p class="text-gray-600">
+                <p class="text-gray-900">
 
                     Sistem Meteran Air digunakan untuk
                     mengelola data pelanggan,
