@@ -54,10 +54,7 @@ $query = mysqli_query($conn, "
 
             <!-- Search -->
             <div class="mb-5">
-                <input
-                    type="text"
-                    id="searchInput"
-                    placeholder="Cari nama pelanggan / nomor pelanggan..."
+                <input type="text" id="searchInput" placeholder="Cari nama pelanggan / nomor pelanggan..."
                     class="w-full border border-slate-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
             </div>
 
@@ -87,7 +84,7 @@ $query = mysqli_query($conn, "
 
                         if (mysqli_num_rows($query) > 0):
                             while ($data = mysqli_fetch_assoc($query)):
-                        ?>
+                                ?>
 
                                 <tr class="border-b hover:bg-slate-50 transition">
                                     <td class="p-3">
@@ -131,7 +128,8 @@ $query = mysqli_query($conn, "
 
                                         <?php else: ?>
 
-                                            <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap">
+                                            <span
+                                                class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap">
                                                 Belum Bayar
                                             </span>
 
@@ -146,13 +144,12 @@ $query = mysqli_query($conn, "
                                                 Edit
                                             </a>
 
-                                            <a href="detail_tagihan.php?id=<?= $data['id_tagihan']; ?>"
+                                            <a href="detail_tagih.php?id=<?= $data['id_tagihan']; ?>"
                                                 class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm">
                                                 Detail
                                             </a>
 
-                                            <a href="#"
-                                                onclick="konfirmasiHapus(<?= $data['id_tagihan']; ?>)"
+                                            <a href="#" onclick="konfirmasiHapus(<?= $data['id_tagihan']; ?>)"
                                                 class="bg-red-500 text-white px-3 py-1 rounded">
                                                 Hapus
                                             </a>
@@ -167,7 +164,7 @@ $query = mysqli_query($conn, "
                                     </td>
                                 </tr>
 
-                            <?php
+                                <?php
                             endwhile;
                         else:
                             ?>
@@ -185,13 +182,12 @@ $query = mysqli_query($conn, "
 
             </div>
 
-            
+
         </div>
 
-        
+
         <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
-            <a
-                href="pelanggan.php"
+            <a href="dashboard.php"
                 class="inline-block mt-6 bg-slate-600 hover:bg-slate-700 text-white px-5 py-3 rounded-lg">
                 ← Kembali
             </a>
@@ -203,7 +199,7 @@ $query = mysqli_query($conn, "
         const searchInput = document.getElementById("searchInput");
         const tableRows = document.querySelectorAll("#tableBody tr");
 
-        searchInput.addEventListener("keyup", function() {
+        searchInput.addEventListener("keyup", function () {
 
             const keyword = this.value.toLowerCase();
 

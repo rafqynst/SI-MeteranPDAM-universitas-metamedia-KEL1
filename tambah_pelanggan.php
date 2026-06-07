@@ -181,6 +181,14 @@ href="assets/css/style.css">
         Data Pelanggan
 
     </a>
+    
+    </a>
+    <a href="pemakaian.php"
+    class="block px-6 py-3 hover:bg-blue-600">
+
+        Pemakaian Air
+
+    </a>
 
     <a href="logout.php"
     class="block px-6 py-3 hover:bg-red-600">
