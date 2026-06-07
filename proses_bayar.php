@@ -1,117 +1,104 @@
 <?php
-session_start();
 include 'config/koneksi.php';
+session_start();
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header("Location: pemakaian.php");
+if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+    header("Location: tagihan.php");
     exit;
 }
 
-// ambil data
-$id_tagihan = $_POST['id_tagihan'];
-$id_pelanggan = $_POST['id_pelanggan'];
-$metode = $_POST['metode_pembayaran'];
+$id_tagihan = intval($_POST['id_tagihan']);
+$id_pelanggan = intval($_POST['id_pelanggan']);
+$metode = mysqli_real_escape_string($conn, $_POST['metode_pembayaran']);
 
-$id_petugas = $_SESSION['id_petugas'];
-
-// ambil total tagihan
-$queryTagihan = mysqli_query($conn, "
+// cek tagihan
+$qTagihan = mysqli_query($conn,"
     SELECT *
     FROM tagihan
     WHERE id_tagihan='$id_tagihan'
 ");
 
-$tagihan = mysqli_fetch_assoc($queryTagihan);
+$tagihan = mysqli_fetch_assoc($qTagihan);
 
 if (!$tagihan) {
-    die("Tagihan tidak ditemukan.");
+    die("Tagihan tidak ditemukan");
 }
 
-$total = $tagihan['total_tagihan'];
-
-// cek sudah lunas
 if ($tagihan['status'] == 'Lunas') {
 
     echo "
     <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
-
     <script>
-        Swal.fire({
-            icon:'info',
-            title:'Sudah Dibayar',
-            text:'Tagihan ini sudah lunas'
-        }).then(() => {
-            window.location='pemakaian.php';
-        });
-    </script>
-    ";
+    Swal.fire({
+        icon:'info',
+        title:'Sudah Lunas',
+        text:'Tagihan ini sudah dibayar'
+    }).then(()=>{
+        window.location='tagihan.php';
+    });
+    </script>";
 
     exit;
 }
 
-// simpan pembayaran
-$insert = mysqli_query($conn, "
-    INSERT INTO pembayaran (
-        id_tagihan,
-        id_pelanggan,
-        id_petugas,
-        metode_pembayaran,
-        total_bayar,
-        status
-    )
-    VALUES (
-        '$id_tagihan',
-        '$id_pelanggan',
-        '$id_petugas',
-        '$metode',
-        '$total',
-        'Berhasil'
-    )
-");
+mysqli_begin_transaction($conn);
 
-// update status tagihan
-if ($insert) {
+try {
 
-    mysqli_query($conn, "
+    // simpan pembayaran
+    mysqli_query($conn,"
+        INSERT INTO pembayaran (
+            id_tagihan,
+            id_pelanggan,
+            tanggal_bayar,
+            metode_pembayaran,
+            jumlah_bayar,
+            status
+        )
+        VALUES (
+            '$id_tagihan',
+            '$id_pelanggan',
+            NOW(),
+            '$metode',
+            '{$tagihan['total_tagihan']}',
+            'Berhasil'
+        )
+    ");
+
+    // update status tagihan
+    mysqli_query($conn,"
         UPDATE tagihan
         SET status='Lunas'
         WHERE id_tagihan='$id_tagihan'
     ");
 
-    $id_pembayaran = mysqli_insert_id($conn);
+    mysqli_commit($conn);
 
     echo "
     <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
-
     <script>
-        Swal.fire({
-            icon:'success',
-            title:'Pembayaran Berhasil!',
-            text:'Tagihan berhasil dibayar',
-            confirmButtonText:'OK'
-        }).then((result) => {
+    Swal.fire({
+        icon:'success',
+        title:'Pembayaran Berhasil',
+        text:'Tagihan berhasil dilunasi'
+    }).then(()=>{
+        window.location='detail_tagihan.php?id=$id_tagihan';
+    });
+    </script>";
 
-            if(result.isConfirmed){
-                window.location=
-                'cetak_bukti.php?id=$id_pembayaran';
-            }
+} catch (Exception $e) {
 
-        });
-    </script>
-    ";
-} else {
+    mysqli_rollback($conn);
 
     echo "
     <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
-
     <script>
-        Swal.fire({
-            icon:'error',
-            title:'Gagal',
-            text:'Pembayaran gagal'
-        }).then(() => {
-            history.back();
-        });
-    </script>
-    ";
+    Swal.fire({
+        icon:'error',
+        title:'Gagal',
+        text:'Pembayaran gagal diproses'
+    }).then(()=>{
+        history.back();
+    });
+    </script>";
 }

@@ -7,6 +7,7 @@ if (!isset($_GET['id'])) {
     exit;
 }
 
+
 $id_tagihan = intval($_GET['id']);
 
 // Ambil detail tagihan + pelanggan
@@ -85,7 +86,7 @@ $nama_bulan = [
                     Pembayaran Tagihan PDAM
                 </h1>
 
-                <a href="detail_tagihan.php?id=<?= $data['id_tagihan']; ?>"
+                <a href="detail_tagih.php?id=<?= $data['id_tagihan']; ?>"
                     class="bg-slate-600 hover:bg-slate-700 text-white px-5 py-3 rounded-lg">
                     ← Kembali
                 </a>
@@ -268,11 +269,11 @@ $nama_bulan = [
                     </p>
 
                     <p class="font-bold text-xl">
-                        1234567890
+                        2213 0101 7938 504
                     </p>
 
                     <p>
-                        A/N PDAM Kota Padang
+                        Meteran PDAM
                     </p>
                 </div>
 
@@ -284,8 +285,9 @@ $nama_bulan = [
                         Scan QR Code
                     </h3>
 
-                    <img src="assets/qris.jpg"
-                        class="w-72 mx-auto rounded-xl shadow-lg">
+                    <img src="assets/img/pakar balak.png"
+     class="w-72 mx-auto rounded-xl shadow-lg"
+     alt="QRIS">
 
                     <p class="mt-4 text-slate-600">
                         Scan QR untuk melakukan pembayaran
@@ -294,10 +296,11 @@ $nama_bulan = [
 
                 <div class="flex gap-4">
 
-                    <button type="submit"
+                    <button
+                        type="button"
+                        onclick="window.location.href='pemakaian.php'"
                         class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold">
-
-                        Bayar Sekarang
+                        Bayar Selesai
                     </button>
 
                 </div>
