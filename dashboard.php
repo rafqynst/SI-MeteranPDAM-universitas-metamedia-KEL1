@@ -28,7 +28,7 @@ $statistik = mysqli_fetch_assoc(mysqli_query($conn, "
     JOIN tagihan t
         ON p.id_tagihan = t.id_tagihan
 
-    $where
+    
 "));
 ?>
 
@@ -86,6 +86,12 @@ href="assets/css/style.css">
     class="block px-6 py-3 hover:bg-blue-600">
 
         Pemakaian Air
+
+    </a>
+    <a href="lapor.php"
+    class="block px-6 py-3 hover:bg-blue-600">
+
+        Laporan
 
     </a>
 

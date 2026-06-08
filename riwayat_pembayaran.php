@@ -82,7 +82,7 @@ $bulan = [
 
             <div class="flex gap-3">
 
-                
+
 
                 <a href="pemakaian.php"
                     class="bg-slate-600 hover:bg-slate-700 text-white px-5 py-3 rounded-lg">
@@ -104,6 +104,7 @@ $bulan = [
                     <input
                         type="text"
                         name="search"
+                        id="searchInput"
                         value="<?= $search; ?>"
                         placeholder="Cari nama pelanggan..."
                         class="w-full border rounded-lg px-4 py-3">
@@ -144,7 +145,7 @@ $bulan = [
 
                 </thead>
 
-                <tbody>
+                <tbody id="tableHistory">
 
                     <?php
                     $no = 1;
@@ -168,11 +169,11 @@ $bulan = [
 
                             <td class="p-4">
 
-                                <div class="font-semibold">
+                                <div class="font-semibold nama">
                                     <?= $row['nama_pelanggan']; ?>
                                 </div>
 
-                                <div class="text-sm text-slate-500">
+                                <div class="text-sm text-slate-500 nomor">
                                     <?= $row['nomor_pelanggan']; ?>
                                 </div>
 
@@ -268,6 +269,36 @@ $bulan = [
 
     </div>
 
+
+    <script>
+        const searchInput = document.getElementById("searchInput");
+        const tableRows = document.querySelectorAll("#tableHistory tr");
+
+        searchInput.addEventListener("keyup", function() {
+
+            const keyword = this.value.toLowerCase();
+
+            tableRows.forEach(row => {
+
+                const nama = row.querySelector(".nama");
+                const nomor = row.querySelector(".nomor");
+
+                if (!nama || !nomor) return;
+
+                const namaText = nama.textContent.toLowerCase();
+                const nomorText = nomor.textContent.toLowerCase();
+
+                if (
+                    namaText.includes(keyword) ||
+                    nomorText.includes(keyword)
+                ) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

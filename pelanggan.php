@@ -162,6 +162,12 @@ class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
         Pemakaian Air
 
     </a>
+    <a href="lapor.php"
+    class="block px-6 py-3 hover:bg-blue-600">
+
+        Laporan
+
+    </a>
 
     <a href="logout.php"
     class="block px-6 py-3 hover:bg-red-600">

@@ -92,7 +92,7 @@ $nama_bulan = [
                 </a>
             </div>
 
-            <form action="proses_bayar.php" method="POST">
+            <form action="bayar_proses.php?id=<?= $id_tagihan ?>" method="POST">
 
                 <input type="hidden"
                     name="id_tagihan"
@@ -211,99 +211,102 @@ $nama_bulan = [
                 </div>
 
                 <!-- metode pembayaran -->
-                <div class="mb-8">
+                
+                    <div class="mb-8">
+                    
+                        <h2 class="font-bold text-lg mb-4">
+                            Pilih Metode Pembayaran
+                        </h2>
 
-                    <h2 class="font-bold text-lg mb-4">
-                        Pilih Metode Pembayaran
-                    </h2>
+                        <div class="space-y-3">
 
-                    <div class="space-y-3">
+                            <label class="flex items-center gap-3 border p-4 rounded-lg cursor-pointer">
 
-                        <label class="flex items-center gap-3 border p-4 rounded-lg cursor-pointer">
+                                <input type="radio"
+                                    name="metode_pembayaran"
+                                    value="Cash"
+                                    required>
 
-                            <input type="radio"
-                                name="metode_pembayaran"
-                                value="Cash"
-                                required>
+                                <span class="font-medium">
+                                    Cash
+                                </span>
+                            </label>
 
-                            <span class="font-medium">
-                                Cash
-                            </span>
-                        </label>
+                            <label class="flex items-center gap-3 border p-4 rounded-lg cursor-pointer">
 
-                        <label class="flex items-center gap-3 border p-4 rounded-lg cursor-pointer">
+                                <input type="radio"
+                                    name="metode_pembayaran"
+                                    value="Transfer">
 
-                            <input type="radio"
-                                name="metode_pembayaran"
-                                value="Transfer">
+                                <span class="font-medium">
+                                    Transfer Bank
+                                </span>
+                            </label>
 
-                            <span class="font-medium">
-                                Transfer Bank
-                            </span>
-                        </label>
+                            <label class="flex items-center gap-3 border p-4 rounded-lg cursor-pointer">
 
-                        <label class="flex items-center gap-3 border p-4 rounded-lg cursor-pointer">
+                                <input type="radio"
+                                    name="metode_pembayaran"
+                                    value="QR Code">
 
-                            <input type="radio"
-                                name="metode_pembayaran"
-                                value="QR Code">
+                                <span class="font-medium">
+                                    QR Code
+                                </span>
+                            </label>
 
-                            <span class="font-medium">
-                                QR Code
-                            </span>
-                        </label>
+                        </div>
+                    </div>
+
+                    <!-- transfer -->
+                    <div id="transfer-box"
+                        class="hidden bg-blue-50 border border-blue-200 rounded-xl p-5 mb-6">
+
+                        <h3 class="font-bold text-lg mb-3">
+                            Transfer Bank
+                        </h3>
+
+                        <p>
+                            Bank BRI
+                        </p>
+
+                        <p class="font-bold text-xl">
+                            2213 0101 7938 504
+                        </p>
+
+                        <p>
+                            Meteran PDAM
+                        </p>
+                    </div>
+
+                    <!-- qr -->
+                    <div id="qr-box"
+                        class="hidden bg-green-50 border border-green-200 rounded-xl p-5 mb-6 text-center">
+
+                        <h3 class="font-bold text-lg mb-3">
+                            Scan QR Code
+                        </h3>
+
+                        <img src="assets/img/pakar balak.png"
+                            class="w-72 mx-auto rounded-xl shadow-lg"
+                            alt="QRIS">
+
+                        <p class="mt-4 text-slate-600">
+                            Scan QR untuk melakukan pembayaran
+                        </p>
+                    </div>
+                
+                    <div class="flex gap-4">
+
+                        <button
+                            type="submit"
+                            class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold">
+                            
+                            Bayar
+
+                        </button>
 
                     </div>
-                </div>
-
-                <!-- transfer -->
-                <div id="transfer-box"
-                    class="hidden bg-blue-50 border border-blue-200 rounded-xl p-5 mb-6">
-
-                    <h3 class="font-bold text-lg mb-3">
-                        Transfer Bank
-                    </h3>
-
-                    <p>
-                        Bank BRI
-                    </p>
-
-                    <p class="font-bold text-xl">
-                        2213 0101 7938 504
-                    </p>
-
-                    <p>
-                        Meteran PDAM
-                    </p>
-                </div>
-
-                <!-- qr -->
-                <div id="qr-box"
-                    class="hidden bg-green-50 border border-green-200 rounded-xl p-5 mb-6 text-center">
-
-                    <h3 class="font-bold text-lg mb-3">
-                        Scan QR Code
-                    </h3>
-
-                    <img src="assets/img/pakar balak.png"
-     class="w-72 mx-auto rounded-xl shadow-lg"
-     alt="QRIS">
-
-                    <p class="mt-4 text-slate-600">
-                        Scan QR untuk melakukan pembayaran
-                    </p>
-                </div>
-
-                <div class="flex gap-4">
-
-                   <a href="bayar_proses.php?id=<?= $id_tagihan ?>"
-                    class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold">
-                    Bayar 
-                    </a>
-
-                </div>
-
-            </form>
+                </form>
 
         </div>
     </div>

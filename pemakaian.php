@@ -25,7 +25,8 @@ $query = mysqli_query($conn, "
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-slate-100">
+<body>
+    
 
     <div class="max-w-7xl mx-auto p-6">
 

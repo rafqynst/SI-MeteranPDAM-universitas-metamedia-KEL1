@@ -136,6 +136,8 @@ if (isset($_POST['simpan'])) {
     <title>Tambah Pemakaian</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
 
 </head>
 
@@ -149,7 +151,7 @@ if (isset($_POST['simpan'])) {
                 Tambah Pemakaian Air
             </h1>
 
-            <form method="POST">
+            <form method="POST" id="formPemakaian">
 
                 <!-- pelanggan -->
                 <div class="mb-4">
@@ -162,6 +164,7 @@ if (isset($_POST['simpan'])) {
                         id="id_pelanggan"
                         required
                         class="w-full border rounded-lg p-3">
+
                         <option value="">
                             -- Pilih Pelanggan --
                         </option>
@@ -188,6 +191,7 @@ if (isset($_POST['simpan'])) {
                         <select
                             name="bulan"
                             id="bulan_select"
+                            required
                             class="w-full border rounded-lg p-3">
 
                             <option value="">
@@ -481,6 +485,39 @@ if (isset($_POST['simpan'])) {
             total.value = tagihan;
 
         }
+    </script>
+
+    <script>
+        new TomSelect("#id_pelanggan", {
+            create: false,
+            sortField: {
+                field: "text",
+                direction: "asc"
+            },
+            placeholder: "Cari nomor atau nama pelanggan..."
+        });
+    </script>
+
+    <script>
+        document
+            .getElementById('formPemakaian')
+            .addEventListener('submit', function(e) {
+
+                const bulan = document.getElementById('bulan_select').value;
+
+                if (bulan === '') {
+
+                    e.preventDefault();
+
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Peringatan!',
+                        text: 'Bulan harus diisi terlebih dahulu'
+                    });
+
+                    return false;
+                }
+            });
     </script>
 
 </body>

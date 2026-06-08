@@ -81,7 +81,7 @@
             </a>
 
             <a href="cetak_struk.php?id=<?= $_GET['id'] ?? '' ?>"
-               target="_blank"
+               
                class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold">
                 Cetak Struk
             </a>

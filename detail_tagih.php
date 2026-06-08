@@ -406,12 +406,12 @@ switch ($data['kategori']) {
                     class="bg-gray-500 hover:bg-gray-600 text-white px-5 py-2 rounded-lg transition">
                     Kembali
                 </a>
-                <?php if(strtolower(trim($data['status'])) != 'lunas'): ?>
-<a href="pembayaran.php?id=<?= $data['id_tagihan']; ?>"
-   class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg">
-    Bayar Tagihan
-</a>
-<?php endif; ?>
+                <?php if (strtolower(trim($data['status'])) != 'lunas'): ?>
+                    <a href="pembayaran.php?id=<?= $data['id_tagihan']; ?>"
+                        class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg">
+                        Bayar Tagihan
+                    </a>
+                <?php endif; ?>
                 <button onclick="window.print()"
                     class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg transition">
                     Cetak Tagihan

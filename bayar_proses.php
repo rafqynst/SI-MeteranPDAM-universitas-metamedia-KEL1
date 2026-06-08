@@ -11,7 +11,7 @@ $q = mysqli_query($conn,"
 ");
 
 $tagihan = mysqli_fetch_assoc($q);
-
+$metode_pembayaran = $_POST['metode_pembayaran'];
 $id_pelanggan = $tagihan['id_pelanggan'];
 $total_bayar  = $tagihan['total_tagihan'];
 $id_petugas   = $_SESSION['id_petugas'];
@@ -31,7 +31,7 @@ $simpan = mysqli_query($conn,"
         '$id_tagihan',
         '$id_pelanggan',
         '$id_petugas',
-        'Cash',
+        '$metode_pembayaran',
         '$total_bayar',
         'Berhasil'
     )
