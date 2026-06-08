@@ -96,7 +96,7 @@ href="assets/css/style.css">
     </a>
 
     <a href="logout.php"
-    class="block px-6 py-3 hover:bg-red-600">
+    class="block text-red-600 px-6 py-3 hover:bg-red-600  hover:text-white font-semibold ">
 
         Logout
 

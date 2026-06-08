@@ -317,7 +317,7 @@ href="assets/css/style.css">
 
                         </div>
                         <div class="mb-4">
-    <label class="font-semibold bg-gray-300">
+    <label class="font-semibold ">
         Kategori
     </label>
 

@@ -1,6 +1,10 @@
 <?php
+session_start();
 include 'config/koneksi.php';
-
+if(!isset($_SESSION['login'])){
+    header("Location: login.php");
+    exit;
+}
 $bulan = $_GET['bulan'] ?? '';
 $tahun = $_GET['tahun'] ?? '';
 
@@ -79,6 +83,9 @@ $statistik = mysqli_fetch_assoc(mysqli_query($conn, "
 <title>Laporan Pembayaran</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet"
+href="assets/css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
 @media print {
@@ -99,6 +106,94 @@ $statistik = mysqli_fetch_assoc(mysqli_query($conn, "
 
 </head>
 <body class="bg-gray-100">
+    <div class="flex">
+
+    <!-- SIDEBAR -->
+
+    <aside
+    id="sidebar"
+    class="sidebar bg-gradient-to-b from-cyan-500/70 via-blue-600/70 to-blue-900/70 text-white w-64 min-h-screen">
+        <div class="p-6">
+
+            <h2 class="text-2xl font-bold text-blue-300">
+                <i class="fas fa-droplet"></i> Meteran Air
+            </h2>
+           
+
+        </div>
+
+        <nav class="mt-6">
+
+    <a href="dashboard.php" class="block px-6 py-3 hover:bg-blue-600">
+
+                    Dashboard
+
+                </a>
+
+    <a href="pelanggan.php"
+    class="block px-6 py-3 hover:bg-blue-600">
+
+        Data Pelanggan
+
+    </a>
+    <a href="pemakaian.php"
+    class="block px-6 py-3 hover:bg-blue-600">
+
+        Pemakaian Air
+
+    </a>
+    <a href="lapor.php"
+    class="block px-6 py-3 hover:bg-blue-600">
+
+        Laporan
+
+    </a>
+
+    <a href="logout.php"
+    class="block text-red-600 px-6 py-3 hover:bg-red-600  hover:text-white font-semibold ">
+
+        Logout
+
+    </a>
+
+</nav>
+    </aside>
+
+    <!-- CONTENT -->
+
+    <main class="flex-1">
+
+        <!-- TOPBAR -->
+
+        <div
+        class="bg-gradient-to-r from-blue-900/20 via-slate-900/10 to-transparent border-b border-white/10 backdrop-blur-sm shadow-md px-6 py-4 flex justify-between items-center text-white">
+
+            <button
+            onclick="toggleSidebar()"
+            class="mobile-menu text-2xl">
+
+                ☰
+
+            </button>
+
+            <h1
+            class="text-2xl font-bold">
+
+                Laporan
+
+            </h1>
+
+            <div class=" text-gray-800 bg-green-300 input-focus border p-1 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+                Halo,
+                <b>
+                    <?= $_SESSION['nama_petugas']; ?>
+                </b>
+
+            </div>
+
+        </div>
+
 
 <div class="container mx-auto p-6">
 
@@ -176,6 +271,11 @@ $statistik = mysqli_fetch_assoc(mysqli_query($conn, "
                     Cetak
 
                 </button>
+
+                <a href="export_excel.php?bulan=<?= $bulan ?>&tahun=<?= $tahun ?>"
+                    class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg inline-block">
+                    Export Excel
+                </a>
 
             </div>
 
@@ -339,6 +439,6 @@ $statistik = mysqli_fetch_assoc(mysqli_query($conn, "
     </div>
 
 </div>
-
+</div>
 </body>
 </html>

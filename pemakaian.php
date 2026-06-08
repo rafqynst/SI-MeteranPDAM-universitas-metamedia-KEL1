@@ -1,5 +1,10 @@
 <?php
+session_start();
 include 'config/koneksi.php';
+if (!isset($_SESSION['login'])) {
+    header("Location: login.php");
+    exit;
+}
 
 // Query ambil data tagihan + pelanggan
 $query = mysqli_query($conn, "
@@ -23,9 +28,93 @@ $query = mysqli_query($conn, "
     <title>Data Pemakaian Air</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet"
+href="assets/css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 </head>
 
-<body>
+<body class="bg-gray-100">
+
+    <div class="flex">
+          <!-- SIDEBAR -->
+      <aside
+    id="sidebar"
+    class="sidebar bg-gradient-to-b from-cyan-500/70 via-blue-600/70 to-blue-900/70 text-white w-64 min-h-screen">
+        <div class="p-6">
+
+            <h2 class="text-2xl font-bold text-blue-300">
+                <i class="fas fa-droplet"></i> Meteran Air
+            </h2>
+           
+
+        </div>
+
+        <nav class="mt-6">
+
+    <a href="dashboard.php" class="block px-6 py-3 hover:bg-blue-600">
+
+                    Dashboard
+
+                </a>
+
+    <a href="pelanggan.php"
+    class="block px-6 py-3 hover:bg-blue-600">
+
+        Data Pelanggan
+
+    </a>
+    
+    <a href="pemakaian.php"
+    class="block px-6 py-3 hover:bg-blue-600">
+
+        Pemakaian Air
+
+    </a>
+    <a href="lapor.php"
+    class="block px-6 py-3 hover:bg-blue-600">
+
+        Laporan
+
+    </a>
+
+    <a href="logout.php"
+    class="block text-red-600 px-6 py-3 hover:bg-red-600  hover:text-white font-semibold ">
+
+        Logout
+
+    </a>
+
+</nav>
+    </aside>
+
+        <!-- CONTENT -->
+        <main class="flex-1">
+
+            <!-- TOPBAR -->
+            <div class="bg-gradient-to-r from-blue-900/20 via-slate-900/10 to-transparent border-b border-white/10 backdrop-blur-sm shadow-md px-6 py-4 flex justify-between items-center text-white">
+
+
+                <button onclick="toggleSidebar()" class="mobile-menu text-2xl">
+
+                    ☰
+
+                </button>
+
+                <h1 class="text-xl md:text-2xl font-bold">
+                    Pemakaian Air
+                </h1>
+
+                <div class=" text-gray-800 bg-green-300 input-focus border p-1 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+                Halo,
+                <b>
+                    <?= $_SESSION['nama_petugas']; ?>
+                </b>
+
+                </div>
+
+            </div>
     
 
     <div class="max-w-7xl mx-auto p-6">
@@ -33,23 +122,25 @@ $query = mysqli_query($conn, "
         <!-- Header -->
         <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
             <div>
-                <h1 class="text-3xl font-bold text-slate-800">
+                <h1 class="text-3xl font-bold text-yellow-300">
                     Data Pemakaian Air
                 </h1>
-                <p class="text-slate-500">
+                <p class="text-white">
                     Kelola data pemakaian pelanggan PDAM
                 </p>
             </div>
 
-            
-            <a href="riwayat_pembayaran.php"
-                class="bg-yellow-600 hover:bg-yellow-700 text-white px-5 py-3 rounded-lg shadow transition duration-200">
+        </div>
+        <div class="flex justify-end gap-2 mb-4">
+        <a href="tambah_pemakaian.php"
+        class="bg-blue-600 hover:bg-blue-700 text-white px-2 py-3 rounded-lg shadow transition duration-200 ">
+        + Tambah Pemakaian
+    </a>
+    <a href="riwayat_pembayaran.php"
+                class="bg-yellow-600 hover:bg-yellow-700 text-white px-2 py-3 rounded-lg shadow transition duration-200">
                 Riwayat Pembayaran
             </a>
-
-
-
-        </div>
+</div>
 
         <!-- Card -->
         <div class="bg-white rounded-2xl shadow-md p-5">
@@ -188,16 +279,9 @@ $query = mysqli_query($conn, "
         </div>
 
 
-        <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
-            <a href="dashboard.php"
-                class="inline-block mt-6 bg-slate-600 hover:bg-slate-700 text-white px-5 py-3 rounded-lg">
-                ← Kembali
-            </a>
+        
 
-            <a href="tambah_pemakaian.php"
-                class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-lg shadow transition duration-200">
-                + Tambah Pemakaian
-            </a>
+           
         </div>
     </div>
 
@@ -272,7 +356,7 @@ $query = mysqli_query($conn, "
             window.history.replaceState({}, document.title, "pemakaian.php");
         }
     </script>
-
+</div>
 </body>
 
 </html>
