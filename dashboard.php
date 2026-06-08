@@ -17,6 +17,19 @@ $totalPetugas =
 mysqli_num_rows(
     mysqli_query($conn,"SELECT * FROM petugas")
 );
+$statistik = mysqli_fetch_assoc(mysqli_query($conn, "
+    SELECT
+        COUNT(p.id_pembayaran) AS total_transaksi,
+        SUM(p.total_bayar) AS total_pemasukan,
+        SUM(t.pemakaian) AS total_pemakaian
+
+    FROM pembayaran p
+
+    JOIN tagihan t
+        ON p.id_tagihan = t.id_tagihan
+
+    $where
+"));
 ?>
 
 <!DOCTYPE html>
@@ -191,12 +204,9 @@ href="assets/css/style.css">
 
                     </h3>
 
-                    <p
-                    class="text-3xl font-bold text-cyan-400">
-
-                        0 m³
-
-                    </p>
+                    <p class="text-3xl font-bold text-cyan-400">
+                    <?= number_format($statistik['total_pemakaian'] ?? 0,0,',','.'); ?> m³
+                </p>
 
                 </div>
 
@@ -217,11 +227,9 @@ href="assets/css/style.css">
                     </h3>
 
                     <p
-                    class="text-3xl font-bold text-emerald-400">
-
-                        Rp0
-
-                    </p>
+                    class="text-3xl mb-3 font-bold text-emerald-400">
+                    Rp <?= number_format($statistik['total_pemasukan'] ?? 0,0,',','.'); ?>
+                </p>
 
                 </div>
 
