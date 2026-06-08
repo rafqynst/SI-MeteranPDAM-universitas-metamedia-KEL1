@@ -40,9 +40,10 @@ $query = mysqli_query($conn, "
                 </p>
             </div>
 
-            <a href="tambah_pemakaian.php"
-                class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-lg shadow transition duration-200">
-                + Tambah Pemakaian
+            
+            <a href="riwayat_pembayaran.php"
+                class="bg-yellow-600 hover:bg-yellow-700 text-white px-5 py-3 rounded-lg shadow transition duration-200">
+                Riwayat Pembayaran
             </a>
 
 
@@ -190,6 +191,11 @@ $query = mysqli_query($conn, "
             <a href="dashboard.php"
                 class="inline-block mt-6 bg-slate-600 hover:bg-slate-700 text-white px-5 py-3 rounded-lg">
                 ← Kembali
+            </a>
+
+            <a href="tambah_pemakaian.php"
+                class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-lg shadow transition duration-200">
+                + Tambah Pemakaian
             </a>
         </div>
     </div>

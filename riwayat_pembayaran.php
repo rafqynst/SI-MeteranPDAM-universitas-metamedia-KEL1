@@ -82,11 +82,7 @@ $bulan = [
 
             <div class="flex gap-3">
 
-                <a href="laporan.php"
-                    class="bg-green-600 hover:bg-green-700 text-white px-5 py-3 rounded-lg">
-
-                    Laporan
-                </a>
+                
 
                 <a href="pemakaian.php"
                     class="bg-slate-600 hover:bg-slate-700 text-white px-5 py-3 rounded-lg">

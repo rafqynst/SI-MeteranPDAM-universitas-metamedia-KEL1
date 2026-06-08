@@ -296,12 +296,10 @@ $nama_bulan = [
 
                 <div class="flex gap-4">
 
-                    <button
-                        type="button"
-                        onclick="window.location.href='pemakaian.php'"
-                        class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold">
-                        Bayar Selesai
-                    </button>
+                   <a href="bayar_proses.php?id=<?= $id_tagihan ?>"
+                    class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold">
+                    Bayar 
+                    </a>
 
                 </div>
 
