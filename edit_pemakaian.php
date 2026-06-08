@@ -2,6 +2,9 @@
 <?php
 include 'config/koneksi.php';
 
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 if (!isset($_GET['id'])) {
     header('Location: pemakaian.php');
     exit;
@@ -19,8 +22,12 @@ $query = mysqli_query($conn, "
     FROM tagihan
     JOIN pelanggan
     ON tagihan.id_pelanggan = pelanggan.id_pelanggan
-    WHERE id_tagihan = '$id'
+    WHERE tagihan.id_tagihan = '$id'
 ");
+
+if (!$query) {
+    die("Query Error: " . mysqli_error($conn));
+}
 
 $data = mysqli_fetch_assoc($query);
 
@@ -31,21 +38,32 @@ if (!$data) {
 
 // jika lunas tidak bisa edit
 if ($data['status'] == 'Lunas') {
-
     echo "
-    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+    </head>
+    <body>
 
     <script>
-    Swal.fire({
-        icon: 'warning',
-        title: 'Tidak Bisa Edit',
-        text: 'Tagihan yang sudah lunas tidak dapat diedit'
-    }).then(() => {
-        window.location='pemakaian.php';
-    });
-    </script>
-    ";
+        document.addEventListener('DOMContentLoaded', function () {
 
+            Swal.fire({
+                icon: 'warning',
+                title: 'Tidak Bisa Edit',
+                text: 'Tagihan yang sudah lunas tidak dapat diedit',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                window.location.href = 'pemakaian.php';
+            });
+
+        });
+    </script>
+
+    </body>
+    </html>
+    ";
     exit;
 }
 

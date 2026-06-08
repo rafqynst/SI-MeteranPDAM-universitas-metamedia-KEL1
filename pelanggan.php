@@ -445,11 +445,7 @@ class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
 
                                                 </button>
 
-                                                <a href="pemakaian.php"
-                                                    class="bg-green-600 hover:bg-green-800 text-white px-2 py-2 rounded-lg">
-
-                                                    <i class="fas fa-file-invoice-dollar"></i>
-                                                </a>
+                                               
 
                                             </div>
 
