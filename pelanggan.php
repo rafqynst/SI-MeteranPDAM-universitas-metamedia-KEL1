@@ -26,13 +26,37 @@ if (isset($_GET['hapus'])) {
 }
 
 /* PENCARIAN */
+
 $cari = '';
+$batas = 5;
+
+$halaman = isset($_GET['halaman'])
+    ? (int)$_GET['halaman']
+    : 1;
+
+if ($halaman < 1) {
+    $halaman = 1;
+}
+
+$mulai = ($halaman - 1) * $batas;
 
 if (isset($_GET['cari'])) {
+
     $cari = mysqli_real_escape_string(
         $conn,
         $_GET['cari']
     );
+
+    $total_query = mysqli_query(
+        $conn,
+        "SELECT *
+         FROM pelanggan
+         WHERE nama_pelanggan LIKE '%$cari%'
+         OR nomor_pelanggan LIKE '%$cari%'
+         OR no_hp LIKE '%$cari%'"
+    );
+
+    $total_data = mysqli_num_rows($total_query);
 
     $query = mysqli_query(
         $conn,
@@ -41,17 +65,29 @@ if (isset($_GET['cari'])) {
          WHERE nama_pelanggan LIKE '%$cari%'
          OR nomor_pelanggan LIKE '%$cari%'
          OR no_hp LIKE '%$cari%'
-         ORDER BY id_pelanggan DESC"
+         ORDER BY id_pelanggan DESC
+         LIMIT $mulai, $batas"
     );
+
 } else {
+
+    $total_query = mysqli_query(
+        $conn,
+        "SELECT * FROM pelanggan"
+    );
+
+    $total_data = mysqli_num_rows($total_query);
 
     $query = mysqli_query(
         $conn,
         "SELECT *
          FROM pelanggan
-         ORDER BY id_pelanggan DESC"
+         ORDER BY id_pelanggan DESC
+         LIMIT $mulai, $batas"
     );
 }
+
+$total_halaman = ceil($total_data / $batas);
 ?>
 
 <!DOCTYPE html>
@@ -372,6 +408,8 @@ class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
 
                             <tbody>
 
+                    
+
                                 <?php
 
                                 $no = 1;
@@ -480,6 +518,46 @@ class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
                             </tbody>
 
                         </table>
+                        <div class="flex justify-between items-center mt-4">
+
+                        <div class="text-sm text-gray-500">
+                            Total Data: <?= $total_data ?>
+                        </div>
+
+                        <div class="flex gap-2">
+
+                            <?php if($halaman > 1): ?>
+                                <a href="?cari=<?= urlencode($cari) ?>&halaman=<?= $halaman-1 ?>"
+                                    class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">
+                                    ←
+                                </a>
+                            <?php endif; ?>
+
+                            <?php for($i = 1; $i <= $total_halaman; $i++): ?>
+
+                                <?php if($i == $halaman): ?>
+                                    <span class="px-3 py-1 bg-blue-500 text-white rounded">
+                                        <?= $i ?>
+                                    </span>
+                                <?php else: ?>
+                                    <a href="?cari=<?= urlencode($cari) ?>&halaman=<?= $i ?>"
+                                        class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">
+                                        <?= $i ?>
+                                    </a>
+                                <?php endif; ?>
+
+                            <?php endfor; ?>
+
+                            <?php if($halaman < $total_halaman): ?>
+                                <a href="?cari=<?= urlencode($cari) ?>&halaman=<?= $halaman+1 ?>"
+                                    class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">
+                                    →
+                                </a>
+                            <?php endif; ?>
+
+                        </div>
+
+                    </div>
 
                     </div>
 

@@ -13,6 +13,8 @@ if(!isset($_GET['id'])){
 }
 
 $id = (int)$_GET['id'];
+// var_dump($id);
+// die;
 
 $query = mysqli_query(
     $conn,

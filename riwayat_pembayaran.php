@@ -1,8 +1,37 @@
 <?php
 include 'config/koneksi.php';
 
-$search = $_GET['search'] ?? '';
+$search = mysqli_real_escape_string(
+    $conn,
+    $_GET['search'] ?? ''
+);
+$batas = 10;
 
+$halaman = isset($_GET['halaman'])
+    ? (int)$_GET['halaman']
+    : 1;
+
+if ($halaman < 1) {
+    $halaman = 1;
+}
+
+$mulai = ($halaman - 1) * $batas;
+$total_query = mysqli_query($conn, "
+    SELECT pembayaran.id_pembayaran
+
+    FROM pembayaran
+
+    JOIN pelanggan
+    ON pembayaran.id_pelanggan =
+    pelanggan.id_pelanggan
+
+    WHERE pelanggan.nama_pelanggan
+    LIKE '%$search%'
+");
+
+$total_data = mysqli_num_rows($total_query);
+
+$total_halaman = ceil($total_data / $batas);
 $query = mysqli_query($conn, "
     SELECT 
         pembayaran.*,
@@ -33,6 +62,8 @@ $query = mysqli_query($conn, "
     LIKE '%$search%'
 
     ORDER BY pembayaran.id_pembayaran DESC
+
+    LIMIT $mulai, $batas
 ");
 
 $bulan = [
@@ -148,7 +179,7 @@ $bulan = [
                 <tbody id="tableHistory">
 
                     <?php
-                    $no = 1;
+                   $no = $mulai + 1;
                     while ($row = mysqli_fetch_assoc($query)):
                     ?>
 
@@ -264,6 +295,46 @@ $bulan = [
                 </tbody>
 
             </table>
+            <div class="flex justify-between items-center mt-5">
+
+    <div class="text-sm text-gray-500">
+        Total <?= $total_data ?> pembayaran
+    </div>
+
+    <div class="flex gap-2">
+
+        <?php if($halaman > 1): ?>
+            <a href="?search=<?= urlencode($search) ?>&halaman=<?= $halaman-1 ?>"
+               class="px-3 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">
+                ←
+            </a>
+        <?php endif; ?>
+
+        <?php for($i=1; $i<=$total_halaman; $i++): ?>
+
+            <?php if($i == $halaman): ?>
+                <span class="px-3 py-2 bg-cyan-500 text-white rounded-lg">
+                    <?= $i ?>
+                </span>
+            <?php else: ?>
+                <a href="?search=<?= urlencode($search) ?>&halaman=<?= $i ?>"
+                   class="px-3 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">
+                    <?= $i ?>
+                </a>
+            <?php endif; ?>
+
+        <?php endfor; ?>
+
+        <?php if($halaman < $total_halaman): ?>
+            <a href="?search=<?= urlencode($search) ?>&halaman=<?= $halaman+1 ?>"
+               class="px-3 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">
+                →
+            </a>
+        <?php endif; ?>
+
+    </div>
+
+</div>
 
         </div>
 

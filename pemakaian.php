@@ -7,6 +7,25 @@ if (!isset($_SESSION['login'])) {
 }
 
 // Query ambil data tagihan + pelanggan
+$batas = 10;
+
+$halaman = isset($_GET['halaman'])
+    ? (int)$_GET['halaman']
+    : 1;
+
+if ($halaman < 1) {
+    $halaman = 1;
+}
+
+$mulai = ($halaman - 1) * $batas;
+$total_query = mysqli_query(
+    $conn,
+    "SELECT * FROM tagihan"
+);
+
+$total_data = mysqli_num_rows($total_query);
+
+$total_halaman = ceil($total_data / $batas);
 $query = mysqli_query($conn, "
     SELECT 
         tagihan.*,
@@ -16,6 +35,7 @@ $query = mysqli_query($conn, "
     JOIN pelanggan 
         ON tagihan.id_pelanggan = pelanggan.id_pelanggan
     ORDER BY tagihan.created_at DESC
+    LIMIT $mulai, $batas
 ");
 ?>
 
@@ -272,7 +292,41 @@ href="assets/css/style.css">
 
                     </tbody>
                 </table>
+                    <div class="mt-4 text-sm text-gray-500">
+                        Menampilkan <?= mysqli_num_rows($query) ?> data dari total <?= $total_data ?> data tagihan
+                    </div>
+                    <div class="flex justify-center items-center gap-2 mt-4">
+                                
+                        <?php if($halaman > 1): ?>
+                            <a href="?halaman=<?= $halaman-1 ?>"
+                            class="px-3 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">
+                                ←
+                            </a>
+                        <?php endif; ?>
 
+                        <?php for($i=1; $i<=$total_halaman; $i++): ?>
+
+                            <?php if($i == $halaman): ?>
+                                <span class="px-3 py-2 bg-cyan-500 text-white rounded-lg">
+                                    <?= $i ?>
+                                </span>
+                            <?php else: ?>
+                                <a href="?halaman=<?= $i ?>"
+                                class="px-3 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">
+                                    <?= $i ?>
+                                </a>
+                            <?php endif; ?>
+
+                        <?php endfor; ?>
+
+                        <?php if($halaman < $total_halaman): ?>
+                            <a href="?halaman=<?= $halaman+1 ?>"
+                            class="px-3 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">
+                                →
+                            </a>
+                        <?php endif; ?>
+
+                    </div>
             </div>
 
 
