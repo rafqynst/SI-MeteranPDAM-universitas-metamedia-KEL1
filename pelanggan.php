@@ -26,6 +26,7 @@ if (isset($_GET['hapus'])) {
 }
 
 /* PENCARIAN */
+/* PENCARIAN */
 
 $cari = '';
 $batas = 5;
@@ -278,28 +279,30 @@ class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
 
                 </div>
 
-                <!-- SEARCH -->
-                <div class="bg-white rounded-2xl shadow p-4 mb-6">
+               <!-- SEARCH -->
+<div class="bg-white rounded-2xl shadow-md p-5 mb-6">
 
-                    <form method="GET">
+    <div class="mb-4">
+        <h3 class="text-lg font-semibold text-slate-700">
+            Cari Pelanggan
+        </h3>
 
-                        <div class="flex flex-col md:flex-row gap-3">
+        <p class="text-gray-500 text-sm">
+            Cari berdasarkan nama, nomor pelanggan, atau nomor HP
+        </p>
+    </div>
 
-                            <input type="text" name="cari" value="<?= $cari ?>"
-                                placeholder="Cari nama pelanggan, nomor pelanggan atau no hp..."
-                                class="border rounded-xl p-3 flex-1">
+    <div class="flex gap-3">
 
-                            <button type="submit" class="bg-cyan-500  text-white px-6 rounded-xl">
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Cari nama pelanggan / nomor pelanggan / no hp..."
+            class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-cyan-500">
 
-                                Cari
+    </div>
 
-                            </button>
-
-                        </div>
-
-                    </form>
-
-                </div>
+</div>
                 <?php
                 if (isset($_SESSION['success'])):
                     ?>
@@ -406,7 +409,7 @@ class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
 
                             </thead>
 
-                            <tbody>
+                            <tbody id="tableBody">
 
                     
 
@@ -424,15 +427,15 @@ class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
                                             <?= $no++; ?>
                                         </td>
 
-                                        <td class="p-4 font-semibold">
+                                        <td class="p-4 font-semibold nomor">
                                             <?= $data['nomor_pelanggan']; ?>
                                         </td>
 
-                                        <td class="p-4">
+                                        <td class="p-4 nama">
                                             <?= $data['nama_pelanggan']; ?>
                                         </td>
 
-                                        <td class="p-4">
+                                        <td class="p-4 hp">
                                             <?= $data['no_hp']; ?>
                                         </td>
 
@@ -570,6 +573,53 @@ class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
     </div>
 
     <script src="assets/js/script.js"></script>
+
+    <script>
+const searchInput =
+document.getElementById("searchInput");
+
+const tableRows =
+document.querySelectorAll("#tableBody tr");
+
+searchInput.addEventListener("keyup", function () {
+
+    const keyword =
+    this.value.toLowerCase();
+
+    tableRows.forEach(row => {
+
+        const nama =
+        row.querySelector(".nama");
+
+        const nomor =
+        row.querySelector(".nomor");
+
+        const hp =
+        row.querySelector(".hp");
+
+        if (!nama || !nomor || !hp) return;
+
+        const namaText =
+        nama.textContent.toLowerCase();
+
+        const nomorText =
+        nomor.textContent.toLowerCase();
+
+        const hpText =
+        hp.textContent.toLowerCase();
+
+        if (
+            namaText.includes(keyword) ||
+            nomorText.includes(keyword) ||
+            hpText.includes(keyword)
+        ) {
+            row.style.display = "";
+        } else {
+            row.style.display = "none";
+        }
+    });
+});
+</script>
 
 </body>
 
