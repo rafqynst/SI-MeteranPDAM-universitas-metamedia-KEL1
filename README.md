@@ -2,6 +2,21 @@
 
 Sistem Informasi Pembayaran Air PDAM berbasis web yang dikembangkan sebagai Proyek Tugas Akhir Universitas Metamedia. Aplikasi ini digunakan untuk mengelola data pelanggan, pemakaian air, pembayaran tagihan, serta pembuatan laporan secara digital.
 
+## Link Website
+
+meteranpdam-kel1.infinityfreeapp.com
+
+
+username 1: rafqy
+password  : rafqy01
+
+username 2: nanda
+password  : nanda123
+
+username 3: dedek
+password  : dedek123
+
+
 ## Teknologi yang Digunakan
 
 * PHP Native
