@@ -65,7 +65,7 @@ config/koneksi.php
 
 ## Pengembang
 
-**Nama:** [Rafqy,Nanda,Dedek]
+**Nama:** [Rafqy,Agusmar,Dedek]
 
 **Universitas:** Universitas Metamedia
 
