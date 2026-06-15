@@ -323,7 +323,7 @@ href="assets/css/style.css">
                             <input
                             type="number"
                             name="tarif_per_m3"
-                            value="5000"
+                            value="2000"
                             required
                             class="form-input bg-gray-300">
 

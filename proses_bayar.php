@@ -46,9 +46,10 @@ mysqli_begin_transaction($conn);
 try {
 
     // INSERT pembayaran
-    $id_petugas = $_SESSION['id_petugas'];
+   $id_petugas = intval($_SESSION['id_petugas']);
+$total_bayar = (float)$tagihan['total_tagihan'];
 
-    $insert = mysqli_query($conn, "
+$insert = mysqli_query($conn, "
     INSERT INTO pembayaran (
         id_tagihan,
         id_pelanggan,
@@ -59,11 +60,11 @@ try {
         status
     )
     VALUES (
-        $id_tagihan,
-        $id_pelanggan,
-        $id_petugas,
+        '$id_tagihan',
+        '$id_pelanggan',
+        '$id_petugas',
         '$metode',
-        {$tagihan['total_tagihan']},
+        '$total_bayar',
         NOW(),
         'Berhasil'
     )
@@ -89,6 +90,8 @@ try {
 
 
     echo "
+
+
 <!DOCTYPE html>
 <html>
 <head>

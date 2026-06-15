@@ -92,7 +92,7 @@ $nama_bulan = [
                 </a>
             </div>
 
-            <form action="pembayaran_berhasil.php?id=<?= $id_tagihan ?>" method="POST">
+            <form action="bayar_proses.php?id=<?= $id_tagihan ?>" method="POST">
 
                 <input type="hidden"
                     name="id_tagihan"

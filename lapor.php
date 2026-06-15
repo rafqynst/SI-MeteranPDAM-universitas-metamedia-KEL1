@@ -252,9 +252,62 @@ while($row = mysqli_fetch_assoc($queryGrafik)){
 
                     </div>
 
-                    <!-- FILTER -->
+                
+                    <!-- STATISTIK -->
 
-                    <form method="GET" class="no-print mb-6">
+                    <div class="grid md:grid-cols-3 gap-4 mb-6">
+
+                        <div class="bg-green-500 text-white rounded-xl p-4">
+
+                            <h3 class="font-semibold">
+                                Total Pemasukan
+                            </h3>
+
+                            <p class="text-2xl font-bold">
+                                Rp <?= number_format($statistik['total_pemasukan'] ?? 0, 0, ',', '.'); ?>
+                            </p>
+
+                        </div>
+
+                        <div class="bg-blue-500 text-white rounded-xl p-4">
+
+                            <h3 class="font-semibold">
+                                Total Pemakaian
+                            </h3>
+
+                            <p class="text-2xl font-bold">
+                                <?= number_format($statistik['total_pemakaian'] ?? 0, 0, ',', '.'); ?> m³
+                            </p>
+
+                        </div>
+
+                        <div class="bg-purple-500 text-white rounded-xl p-4">
+
+                            <h3 class="font-semibold">
+                                Total Transaksi
+                            </h3>
+
+                            <p class="text-2xl font-bold">
+                                <?= number_format($statistik['total_transaksi'] ?? 0); ?>
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <!-- GRAFIK PENDAPATAN -->
+
+                    <div class="bg-white rounded-xl shadow-md p-2 mb-2">
+
+                        <h2 class="text-xl font-bold mb-4 text-gray-700">
+                            Grafik Pendapatan Per Tahun
+                        </h2>
+
+                        <canvas id="grafikPendapatan"></canvas>
+
+                    </div>
+
+                    <form method="GET" onsubmit="simpanScroll()">
 
                         <div class="flex flex-wrap gap-3 items-end">
 
@@ -304,14 +357,21 @@ while($row = mysqli_fetch_assoc($queryGrafik)){
 
                             </button>
 
-                            <button
-                                type="button"
-                                onclick="window.print()"
-                                class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg">
+                            
+                            <button onclick="cetakLaporan()"
+                            class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">
+                            Cetak Laporan
+                        </button>
 
-                                Cetak
-
-                            </button>
+                        <script>
+                        function cetakLaporan() {
+                            window.open(
+                                'laporan_cetak.php?bulan=<?= $bulan ?>&tahun=<?= $tahun ?>',
+                                'PRINT',
+                                'width=1200,height=800'
+                            );
+                        }
+                        </script>
 
                             <a href="export_excel.php?bulan=<?= $bulan ?>&tahun=<?= $tahun ?>"
                                 class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg inline-block">
@@ -321,60 +381,6 @@ while($row = mysqli_fetch_assoc($queryGrafik)){
                         </div>
 
                     </form>
-
-                    <!-- STATISTIK -->
-
-                    <div class="grid md:grid-cols-3 gap-4 mb-6">
-
-                        <div class="bg-green-500 text-white rounded-xl p-4">
-
-                            <h3 class="font-semibold">
-                                Total Pemasukan
-                            </h3>
-
-                            <p class="text-2xl font-bold">
-                                Rp <?= number_format($statistik['total_pemasukan'] ?? 0, 0, ',', '.'); ?>
-                            </p>
-
-                        </div>
-
-                        <div class="bg-blue-500 text-white rounded-xl p-4">
-
-                            <h3 class="font-semibold">
-                                Total Pemakaian
-                            </h3>
-
-                            <p class="text-2xl font-bold">
-                                <?= number_format($statistik['total_pemakaian'] ?? 0, 0, ',', '.'); ?> m³
-                            </p>
-
-                        </div>
-
-                        <div class="bg-purple-500 text-white rounded-xl p-4">
-
-                            <h3 class="font-semibold">
-                                Total Transaksi
-                            </h3>
-
-                            <p class="text-2xl font-bold">
-                                <?= number_format($statistik['total_transaksi'] ?? 0); ?>
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                    <!-- GRAFIK PENDAPATAN -->
-
-                    <div class="bg-white rounded-xl shadow-md p-6 mb-6">
-
-                        <h2 class="text-xl font-bold mb-4 text-gray-700">
-                            Grafik Pendapatan Per Tahun
-                        </h2>
-
-                        <canvas id="grafikPendapatan"></canvas>
-
-                    </div>
 
                     <!-- TABEL -->
 
@@ -537,7 +543,32 @@ new Chart(ctx, {
     }
 });
 </script>
+<script>
 
+window.onload = function() {
+
+    if(localStorage.getItem("scrollPos")) {
+
+        window.scrollTo(
+            0,
+            localStorage.getItem("scrollPos")
+        );
+
+        localStorage.removeItem("scrollPos");
+    }
+
+}
+
+function simpanScroll() {
+
+    localStorage.setItem(
+        "scrollPos",
+        window.pageYOffset
+    );
+
+}
+
+</script>
 
 
 </body>
